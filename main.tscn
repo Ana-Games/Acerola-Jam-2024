@@ -1,3 +1,29 @@
-[gd_scene format=3 uid="uid://bwymxqddufves"]
+[gd_scene load_steps=5 format=3 uid="uid://bwymxqddufves"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_5chty"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g4siw"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.5, 0.5, 0.5, 1)
+sky_energy_multiplier = 0.0
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="Sky" id="Sky_satoq"]
+sky_material = SubResource("ProceduralSkyMaterial_g4siw")
+
+[sub_resource type="Environment" id="Environment_avfjf"]
+background_mode = 2
+sky = SubResource("Sky_satoq")
 
 [node name="main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_avfjf")
+
+[node name="Player" type="Node3D" parent="."]
+script = ExtResource("1_5chty")
+
+[node name="Neck" type="Node3D" parent="Player"]
+
+[node name="Camera3D" type="Camera3D" parent="Player/Neck"]
