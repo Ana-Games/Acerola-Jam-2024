@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwymxqddufves"]
+[gd_scene load_steps=7 format=3 uid="uid://bwymxqddufves"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_5chty"]
+[ext_resource type="PackedScene" uid="uid://b1xvc80sjbjco" path="res://models/cable.blend" id="2_sjbkq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g4siw"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -16,6 +17,13 @@ sky_material = SubResource("ProceduralSkyMaterial_g4siw")
 background_mode = 2
 sky = SubResource("Sky_satoq")
 
+[sub_resource type="Curve3D" id="Curve3D_p3igo"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, -0.5, 0, -0.3, 0, 0, 0, 0, 0, 0, 0, 0, 10, -1),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
 [node name="main" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -24,6 +32,30 @@ environment = SubResource("Environment_avfjf")
 [node name="Player" type="Node3D" parent="."]
 script = ExtResource("1_5chty")
 
+[node name="Path3D" type="Path3D" parent="Player"]
+curve = SubResource("Curve3D_p3igo")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Player"]
+polygon = PackedVector2Array(0, 0, 0, 0.01, 0.01, 0.01, 0.01, 0)
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 0
+path_interval = 0.1
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+smooth_faces = true
+
 [node name="Neck" type="Node3D" parent="Player"]
 
 [node name="Camera3D" type="Camera3D" parent="Player/Neck"]
+near = 0.001
+
+[node name="cable" parent="Player" instance=ExtResource("2_sjbkq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.36475, -0.971174)
+visible = false
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Player"]
