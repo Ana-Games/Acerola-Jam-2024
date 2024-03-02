@@ -1,33 +1,42 @@
-[gd_scene load_steps=7 format=3 uid="uid://bwymxqddufves"]
+[gd_scene load_steps=8 format=3 uid="uid://bwymxqddufves"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_5chty"]
-[ext_resource type="PackedScene" uid="uid://b1xvc80sjbjco" path="res://models/cable.blend" id="2_sjbkq"]
+[ext_resource type="PackedScene" uid="uid://bjaetrpc72q54" path="res://hand_held.tscn" id="2_u3e0s"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g4siw"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1m53o"]
 sky_top_color = Color(0, 0, 0, 1)
-sky_horizon_color = Color(0.5, 0.5, 0.5, 1)
-sky_energy_multiplier = 0.0
+sky_horizon_color = Color(0, 0, 0, 1)
 ground_bottom_color = Color(0, 0, 0, 1)
-ground_horizon_color = Color(0.5, 0.5, 0.5, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Sky" id="Sky_satoq"]
-sky_material = SubResource("ProceduralSkyMaterial_g4siw")
+[sub_resource type="Sky" id="Sky_22evx"]
+sky_material = SubResource("ProceduralSkyMaterial_1m53o")
 
-[sub_resource type="Environment" id="Environment_avfjf"]
+[sub_resource type="Environment" id="Environment_7vgpj"]
 background_mode = 2
-sky = SubResource("Sky_satoq")
+sky = SubResource("Sky_22evx")
+tonemap_exposure = 0.8
+glow_enabled = true
+glow_bloom = 0.5
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_sky_affect = 0.1
 
 [sub_resource type="Curve3D" id="Curve3D_p3igo"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, -0.5, 0, -0.3, 0, 0, 0, 0, 0, 0, 0, 0, 10, -1),
+"points": PackedVector3Array(0, 0, 0, 0, 0, -0.7, 0, -0.2, 0, 0, 0, 0, 0, 0, 0, 0, 10, -0.4),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kgx02"]
+albedo_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+metallic = 0.74
+
 [node name="main" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_avfjf")
+environment = SubResource("Environment_7vgpj")
 
 [node name="Player" type="Node3D" parent="."]
 script = ExtResource("1_5chty")
@@ -35,10 +44,10 @@ script = ExtResource("1_5chty")
 [node name="Path3D" type="Path3D" parent="Player"]
 curve = SubResource("Curve3D_p3igo")
 
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Player"]
-polygon = PackedVector2Array(0, 0, 0, 0.01, 0.01, 0.01, 0.01, 0)
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Player/Path3D"]
+polygon = PackedVector2Array(-0.002, -0.002, -0.002, 0.002, 0.002, 0.002, 0.002, -0.002)
 mode = 2
-path_node = NodePath("../Path3D")
+path_node = NodePath("..")
 path_interval_type = 0
 path_interval = 0.1
 path_simplify_angle = 0.0
@@ -48,14 +57,20 @@ path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
 smooth_faces = true
+material = SubResource("StandardMaterial3D_kgx02")
+
+[node name="HandHeld" parent="Player/Path3D" instance=ExtResource("2_u3e0s")]
+transform = Transform3D(1, 0, 0, 0, 0.403169, -0.915123, 0, 0.915123, 0.403169, 0, -0.0560129, -0.136663)
+progress = 0.2
 
 [node name="Neck" type="Node3D" parent="Player"]
 
 [node name="Camera3D" type="Camera3D" parent="Player/Neck"]
+cull_mask = 1048573
+fov = 60.0
 near = 0.001
 
-[node name="cable" parent="Player" instance=ExtResource("2_sjbkq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.36475, -0.971174)
-visible = false
-
 [node name="OmniLight3D" type="OmniLight3D" parent="Player"]
+light_energy = 0.01
+light_volumetric_fog_energy = 5.0
+omni_attenuation = 0.615572
