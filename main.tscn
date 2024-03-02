@@ -41,6 +41,14 @@ environment = SubResource("Environment_7vgpj")
 [node name="Player" type="Node3D" parent="."]
 script = ExtResource("1_5chty")
 
+[node name="Flashlight" type="SpotLight3D" parent="Player"]
+light_color = Color(1, 1, 0.870588, 1)
+light_energy = 0.5
+light_volumetric_fog_energy = 5.0
+spot_range = 10.0
+spot_angle = 20.0
+spot_angle_attenuation = 2.0
+
 [node name="Path3D" type="Path3D" parent="Player"]
 curve = SubResource("Curve3D_p3igo")
 
@@ -71,6 +79,5 @@ fov = 60.0
 near = 0.001
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Player"]
-light_energy = 0.01
+light_energy = 0.02
 light_volumetric_fog_energy = 5.0
-omni_attenuation = 0.615572

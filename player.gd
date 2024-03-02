@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var neck = $Neck as Node3D
 @onready var camera = $Neck/Camera3D as Camera3D
+@onready var flashlight = $Flashlight as SpotLight3D
 @export var look_sensitivity = Vector2(1,1) as Vector2
 var can_look = true as bool
 var look_vector : Vector2
@@ -22,6 +23,7 @@ func _input(event):
 func _physics_process(delta):
 	look()
 	path_sway(delta)
+	lerp_flashlight(delta)
 
 func look():
 	if look_vector == Vector2.ZERO: pass
@@ -41,4 +43,5 @@ func path_sway(delta: float):
 	new_rot = clamp(stored_look_vector.x * 2, -limit, limit)
 	path.rotation_degrees.y = lerp(path.rotation_degrees.y, new_rot, delta * speed)
 
-
+func lerp_flashlight(delta:float):
+	flashlight.global_basis = lerp(flashlight.global_basis, camera.global_basis, delta * 4)

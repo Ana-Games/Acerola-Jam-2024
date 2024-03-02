@@ -1,13 +1,17 @@
 extends PathFollow3D
 
-var txt_stack : Array[String]
-@onready var text = $SubViewport/Control/RichTextLabel as RichTextLabel
+@export var screen_active = true as bool
 @onready var dot_sfx = $Dot as AudioStreamPlayer3D
 @onready var dash_sfx = $Dash as AudioStreamPlayer3D
+
+var txt_stack : Array[String]
+@onready var text = $ScreenUI/Control/RichTextLabel as RichTextLabel
 @onready var word_end = $WordEnd as Timer
+signal stack_finished
 
 func _ready():
-	add_to_stack("hello there my name is ana this is a working morse code translating device in godot")
+	toggle_screen(screen_active)
+	add_to_stack("the normalized scalar product is the cosine of the angle between the two vectors")
 
 func add_to_stack(string:String):
 	for x in string:
@@ -25,17 +29,29 @@ var morse_count = 0 as int
 
 func morse_tick():
 	if not word_end.is_stopped() or txt_stack.size() == 0: return
+	
 	var x = Morse.encrypt(read_from_stack())
+	
 	if morse_count >= x.length():
 		text.text += read_from_stack()
 		txt_stack.pop_front()
 		morse_count = 0
-		if read_from_stack() == " ": word_end.start()
+		
+		if txt_stack.size() == 0: stack_finished.emit()
+		elif read_from_stack() == " ": word_end.start()
+		
 		return
-	if x[morse_count] == "0": dot_sfx.play()
-	elif x[morse_count] == "1": dash_sfx.play()
+	
+	if screen_active:
+		if x[morse_count] == "0": dot_sfx.play()
+		elif x[morse_count] == "1": dash_sfx.play()
+	
 	print(x[morse_count])
 	morse_count += 1
 
 func clear_text():
 	text.text = ""
+
+func toggle_screen(x : bool):
+	screen_active = x
+	$Offset/Screen.visible = x
