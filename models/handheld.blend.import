@@ -35,6 +35,11 @@ _subresources={
 "use_external/enabled": true,
 "use_external/path": "res://models/handheld.tres"
 }
+},
+"nodes": {
+"PATH:Cube": {
+"mesh_instance/layers": 2
+}
 }
 }
 gltf/naming_version=1

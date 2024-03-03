@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwymxqddufves"]
+[gd_scene load_steps=10 format=3 uid="uid://bwymxqddufves"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_5chty"]
+[ext_resource type="PackedScene" uid="uid://bcaif505htlu8" path="res://models/environment/test.blend" id="1_h7q6n"]
 [ext_resource type="PackedScene" uid="uid://bjaetrpc72q54" path="res://hand_held.tscn" id="2_u3e0s"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1m53o"]
@@ -16,11 +17,12 @@ sky_material = SubResource("ProceduralSkyMaterial_1m53o")
 background_mode = 2
 sky = SubResource("Sky_22evx")
 tonemap_exposure = 0.8
-glow_enabled = true
 glow_bloom = 0.5
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 0.02
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.02
-volumetric_fog_sky_affect = 0.1
+volumetric_fog_sky_affect = 0.0
 
 [sub_resource type="Curve3D" id="Curve3D_p3igo"]
 _data = {
@@ -33,26 +35,33 @@ point_count = 2
 albedo_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 metallic = 0.74
 
+[sub_resource type="FogMaterial" id="FogMaterial_t27mw"]
+density = 8.0
+albedo = Color(0, 0, 0, 1)
+
 [node name="main" type="Node3D"]
+
+[node name="test" parent="." instance=ExtResource("1_h7q6n")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7vgpj")
 
 [node name="Player" type="Node3D" parent="."]
 script = ExtResource("1_5chty")
+look_sensitivity = Vector2(0.6, 0.6)
 
 [node name="Flashlight" type="SpotLight3D" parent="Player"]
+layers = 3
 light_color = Color(1, 1, 0.870588, 1)
 light_energy = 0.5
-light_volumetric_fog_energy = 5.0
-spot_range = 10.0
 spot_angle = 20.0
-spot_angle_attenuation = 2.0
+spot_angle_attenuation = 3.24901
 
 [node name="Path3D" type="Path3D" parent="Player"]
 curve = SubResource("Curve3D_p3igo")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="Player/Path3D"]
+layers = 2
 polygon = PackedVector2Array(-0.002, -0.002, -0.002, 0.002, 0.002, 0.002, 0.002, -0.002)
 mode = 2
 path_node = NodePath("..")
@@ -74,10 +83,21 @@ progress = 0.2
 [node name="Neck" type="Node3D" parent="Player"]
 
 [node name="Camera3D" type="Camera3D" parent="Player/Neck"]
-cull_mask = 1048573
 fov = 60.0
 near = 0.001
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Player"]
+layers = 2
 light_energy = 0.02
 light_volumetric_fog_energy = 5.0
+light_cull_mask = 4294967294
+omni_range = 1.0
+
+[node name="FogVolume" type="FogVolume" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.65313, 0)
+visible = false
+layers = 3
+size = Vector3(10, 5, 10)
+material = SubResource("FogMaterial_t27mw")
+
+[editable path="test"]
