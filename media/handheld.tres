@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dfkesdk7w6d2b"]
+
+[ext_resource type="Texture2D" uid="uid://bdahfu5hxt8vo" path="res://media/handheld_body.png" id="1_dc4pu"]
+
+[resource]
+albedo_texture = ExtResource("1_dc4pu")
+texture_filter = 0
+texture_repeat = false

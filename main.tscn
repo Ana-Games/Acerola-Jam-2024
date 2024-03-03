@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bwymxqddufves"]
+[gd_scene load_steps=14 format=3 uid="uid://bwymxqddufves"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_5chty"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_5chty"]
 [ext_resource type="PackedScene" uid="uid://bcaif505htlu8" path="res://models/environment/test.blend" id="1_h7q6n"]
-[ext_resource type="PackedScene" uid="uid://bjaetrpc72q54" path="res://hand_held.tscn" id="2_u3e0s"]
+[ext_resource type="Material" uid="uid://ns33efw5jncx" path="res://media/rock.tres" id="2_nph66"]
+[ext_resource type="PackedScene" uid="uid://bjaetrpc72q54" path="res://scene/hand_held.tscn" id="2_u3e0s"]
+[ext_resource type="AudioStream" uid="uid://b5nquan3x5sle" path="res://sounds/test.wav" id="5_4pk6l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1m53o"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -39,16 +41,31 @@ metallic = 0.74
 density = 8.0
 albedo = Color(0, 0, 0, 1)
 
+[sub_resource type="Gradient" id="Gradient_b1xlu"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sa0xv"]
+gradient = SubResource("Gradient_b1xlu")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [node name="main" type="Node3D"]
 
 [node name="test" parent="." instance=ExtResource("1_h7q6n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="Cube" parent="test" index="0"]
+surface_material_override/0 = ExtResource("2_nph66")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7vgpj")
 
-[node name="Player" type="Node3D" parent="."]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("environment") groups=["player"]]
 script = ExtResource("1_5chty")
 look_sensitivity = Vector2(0.6, 0.6)
+environment = NodePath("../test")
 
 [node name="Flashlight" type="SpotLight3D" parent="Player"]
 layers = 3
@@ -86,6 +103,9 @@ progress = 0.2
 fov = 60.0
 near = 0.001
 
+[node name="RayCast3D" type="RayCast3D" parent="Player/Neck/Camera3D"]
+target_position = Vector3(0, 0, -1)
+
 [node name="OmniLight3D" type="OmniLight3D" parent="Player"]
 layers = 2
 light_energy = 0.02
@@ -99,5 +119,47 @@ visible = false
 layers = 3
 size = Vector3(10, 5, 10)
 material = SubResource("FogMaterial_t27mw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Player"]
+
+[node name="Control" type="Control" parent="Player/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crosshair" type="TextureRect" parent="Player/CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+pivot_offset = Vector2(32, 32)
+texture = SubResource("GradientTexture2D_sa0xv")
+
+[node name="Move" type="AudioStreamPlayer3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.161198)
+volume_db = -25.0
+max_db = 0.1
+pitch_scale = 1.7
+max_distance = 0.5
+max_polyphony = 3
+panning_strength = 2.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_4pk6l")
+volume_db = -10.0
+pitch_scale = 0.5
+autoplay = true
 
 [editable path="test"]
