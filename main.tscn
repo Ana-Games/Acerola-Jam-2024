@@ -24,6 +24,7 @@ fog_light_color = Color(0, 0, 0, 1)
 fog_density = 0.02
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.02
+volumetric_fog_emission_energy = 1024.0
 volumetric_fog_sky_affect = 0.0
 
 [sub_resource type="Curve3D" id="Curve3D_p3igo"]
@@ -53,10 +54,11 @@ fill_to = Vector2(0.5, 0)
 
 [node name="main" type="Node3D"]
 
-[node name="test" parent="." instance=ExtResource("1_h7q6n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+[node name="Environment" type="Node3D" parent="."]
 
-[node name="Cube" parent="test" index="0"]
+[node name="test" parent="Environment" instance=ExtResource("1_h7q6n")]
+
+[node name="Cube" parent="Environment/test" index="0"]
 surface_material_override/0 = ExtResource("2_nph66")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -65,7 +67,7 @@ environment = SubResource("Environment_7vgpj")
 [node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("environment") groups=["player"]]
 script = ExtResource("1_5chty")
 look_sensitivity = Vector2(0.6, 0.6)
-environment = NodePath("../test")
+environment = NodePath("../Environment")
 
 [node name="Flashlight" type="SpotLight3D" parent="Player"]
 layers = 3
@@ -96,6 +98,7 @@ material = SubResource("StandardMaterial3D_kgx02")
 [node name="HandHeld" parent="Player/Path3D" instance=ExtResource("2_u3e0s")]
 transform = Transform3D(1, 0, 0, 0, 0.403169, -0.915123, 0, 0.915123, 0.403169, 0, -0.0560129, -0.136663)
 progress = 0.2
+screen_active = false
 
 [node name="Neck" type="Node3D" parent="Player"]
 
@@ -158,8 +161,8 @@ panning_strength = 2.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_4pk6l")
-volume_db = -10.0
+volume_db = -20.0
 pitch_scale = 0.5
 autoplay = true
 
-[editable path="test"]
+[editable path="Environment/test"]

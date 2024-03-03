@@ -43,7 +43,11 @@ size = Vector3(0.008, 0.008, 0.006)
 bg_color = Color(0.454902, 0.823529, 0.811765, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxblx"]
-bg_color = Color(0.152941, 0.152941, 0.152941, 1)
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="Gradient" id="Gradient_aqsj0"]
 offsets = PackedFloat32Array(1)
@@ -125,7 +129,7 @@ shape = SubResource("BoxShape3D_fj1mi")
 
 [node name="Dot" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_vbyxg")
-volume_db = -25.0
+volume_db = -30.0
 max_db = 0.1
 pitch_scale = 1.7
 max_distance = 0.5
@@ -134,7 +138,7 @@ panning_strength = 2.0
 
 [node name="Dash" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_mvbyn")
-volume_db = -25.0
+volume_db = -30.0
 max_db = 0.1
 pitch_scale = 1.9
 max_distance = 0.5

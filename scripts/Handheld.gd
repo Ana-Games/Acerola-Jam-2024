@@ -9,12 +9,15 @@ class_name Handheld
 
 var txt_stack : Array[String]
 @onready var text = $ScreenUI/Control/RichTextLabel as RichTextLabel
-@onready var word_end = $WordEnd as Timer
+@onready var word_end_timer = $WordEnd as Timer
+@onready var morse_timer = $MorseTick as Timer
 signal stack_finished
 
 func _ready():
 	toggle_screen(screen_active)
-	#add_to_stack("morse code is really interesting i promise this can be a good game mechanic")
+	var msg = "morse code is really interesting i promise this can be a good game mechanic"
+	add_to_stack(msg)
+	print(str(get_morse_time(msg)))
 
 func add_to_stack(string:String):
 	for x in string:
@@ -31,7 +34,7 @@ func read_from_stack() -> String:
 var morse_count = 0 as int
 
 func morse_tick():
-	if not word_end.is_stopped() or txt_stack.size() == 0: return
+	if not word_end_timer.is_stopped() or txt_stack.size() == 0: return
 	
 	var x = Morse.encrypt(read_from_stack())
 	
@@ -41,7 +44,7 @@ func morse_tick():
 		morse_count = 0
 		
 		if txt_stack.size() == 0: stack_finished.emit()
-		elif read_from_stack() == " ": word_end.start()
+		elif read_from_stack() == " ": word_end_timer.start()
 		
 		return
 	
@@ -69,3 +72,13 @@ func set_depth_text(x : float):
 		if size < 3: 
 			for i in range((3-size)):
 				depth_text.text = "O" + depth_text.text
+
+func get_morse_time(code : String) -> float:
+	var count = 0 as float
+	for x in code:
+		if x == " ":
+			count += word_end_timer.wait_time
+			continue
+		var encode = Morse.encrypt(x)
+		for y in encode: count += morse_timer.wait_time
+	return count

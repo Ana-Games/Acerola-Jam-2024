@@ -36,7 +36,7 @@ func _input(event):
 			if event is InputEventMouseMotion:
 				look_vector = event.relative
 
-func _process(delta):
+func _process(_delta):
 	var to_hand = (handheld.global_position - camera.global_position).normalized()
 	
 	var dot = to_hand.dot(-camera.global_basis.z)
@@ -88,7 +88,7 @@ func ray_process(delta:float):
 		if ray.get_collider().is_in_group("up"): depth_change = -1
 		elif ray.get_collider().is_in_group("down"): depth_change = 1
 		
-		var fall_speed = 0.75
+		var fall_speed = 1
 		if depth < start_depth: depth_change = clamp(depth_change,0,1)
 		depth += depth_change * delta * fall_speed
 		
