@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://bjaetrpc72q54"]
+[gd_scene load_steps=24 format=3 uid="uid://bjaetrpc72q54"]
 
 [ext_resource type="Script" path="res://scripts/Handheld.gd" id="1_ieulp"]
 [ext_resource type="AudioStream" uid="uid://d2rpby3h8wuss" path="res://sounds/sine/dot.wav" id="2_vbyxg"]
+[ext_resource type="Script" path="res://scripts/button_return.gd" id="3_737je"]
 [ext_resource type="AudioStream" uid="uid://bry41pwl7y4j2" path="res://sounds/sine/dash.wav" id="3_mvbyn"]
 [ext_resource type="FontFile" uid="uid://cgg0g7auyxkx4" path="res://media/VCR_OSD_MONO_1.001.ttf" id="4_ll6v4"]
 [ext_resource type="PackedScene" uid="uid://tx00gav6alvb" path="res://models/handheld.blend" id="5_pfcd2"]
@@ -17,6 +18,29 @@ albedo_texture = SubResource("ViewportTexture_j0fyx")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ls5k6"]
 size = Vector2(0.015, 0.019)
+
+[sub_resource type="Gradient" id="Gradient_qwt1s"]
+interpolation_mode = 2
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f7l6p"]
+gradient = SubResource("Gradient_qwt1s")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yvbi2"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.0470588)
+albedo_texture = SubResource("GradientTexture2D_f7l6p")
+emission_enabled = true
+emission = Color(0.156863, 0.705882, 0.768627, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bs6yk"]
+material = SubResource("StandardMaterial3D_yvbi2")
+size = Vector2(0.07, 0.05)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_qlc44"]
 viewport_path = NodePath("DepthUI")
@@ -76,20 +100,27 @@ transform = Transform3D(1, 0, 0, 0, -4.37115e-08, -1, 0, 1, -4.37115e-08, 0, 0, 
 layers = 2
 light_color = Color(0.294118, 1, 1, 1)
 light_energy = 10.0
-light_volumetric_fog_energy = 7.0
+light_volumetric_fog_energy = 16.0
 light_cull_mask = 4294967294
 spot_range = 0.05
 spot_angle = 90.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Offset/Screen"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00547092, 0)
+transform = Transform3D(1, 6.55651e-07, 0, 2.98023e-08, 1, 0, 0, 0, 1, -0.000667789, 0.0016837, 0)
 layers = 2
 light_color = Color(0, 1, 1, 1)
-light_energy = 0.1
-light_volumetric_fog_energy = 2.0
+light_energy = 0.4
+light_volumetric_fog_energy = 10.0
+light_specular = 0.0
 light_cull_mask = 4294967294
+shadow_enabled = true
 omni_range = 0.05
 omni_attenuation = 0.535887
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Offset/Screen"]
+transform = Transform3D(1, 0, 0, 1.49012e-08, 1, 0, 0, 0, 1, 0.00116085, 0.00658355, 0)
+layers = 2
+mesh = SubResource("PlaneMesh_bs6yk")
 
 [node name="Depth" type="MeshInstance3D" parent="Offset"]
 transform = Transform3D(1, 0, 0, 1.49012e-08, 1, 0, 0, 0, 1, 0.00573966, 0.0113414, 0.0178414)
@@ -107,9 +138,10 @@ transform = Transform3D(1, 0, 0, 1.49012e-08, 1, 0, 0, 0, 1, -0.0021927, 0.01235
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="Offset/Up"]
 layers = 2
 radius = 0.003
-height = 0.001
+height = 0.002
 sides = 10
 material = SubResource("StandardMaterial3D_dxslf")
+script = ExtResource("3_737je")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Offset/Up"]
 shape = SubResource("BoxShape3D_fj1mi")
@@ -120,9 +152,10 @@ transform = Transform3D(1, 0, 0, 1.49012e-08, 1, 0, 0, 0, 1, -0.0021927, 0.01235
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="Offset/Down"]
 layers = 2
 radius = 0.003
-height = 0.001
+height = 0.002
 sides = 10
 material = SubResource("StandardMaterial3D_dxslf")
+script = ExtResource("3_737je")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Offset/Down"]
 shape = SubResource("BoxShape3D_fj1mi")
@@ -131,8 +164,7 @@ shape = SubResource("BoxShape3D_fj1mi")
 stream = ExtResource("2_vbyxg")
 volume_db = -30.0
 max_db = 0.1
-pitch_scale = 1.7
-max_distance = 0.5
+max_distance = 0.2
 max_polyphony = 3
 panning_strength = 2.0
 
@@ -140,13 +172,12 @@ panning_strength = 2.0
 stream = ExtResource("3_mvbyn")
 volume_db = -30.0
 max_db = 0.1
-pitch_scale = 1.9
-max_distance = 0.5
+max_distance = 0.2
 max_polyphony = 3
 panning_strength = 2.0
 
 [node name="MorseTick" type="Timer" parent="."]
-wait_time = 0.08
+wait_time = 0.12
 autostart = true
 
 [node name="WordEnd" type="Timer" parent="."]

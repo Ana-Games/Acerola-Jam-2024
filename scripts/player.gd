@@ -17,13 +17,14 @@ var stored_look_vector : Vector2
 @onready var ray = $Neck/Camera3D/RayCast3D as RayCast3D
 
 @export var environment : Node3D
+var can_up = true as bool
 var depth :float
 const start_depth = 5 as float
 
 func _ready():
 	depth = start_depth
-	handheld.set_depth_bar(depth)
-	handheld.set_depth_text(depth)
+	handheld.set_depth_bar(depth * 2)
+	handheld.set_depth_text(depth * 2)
 	environment.global_position.y = depth
 
 func _input(event):
@@ -77,7 +78,7 @@ func lerp_flashlight(delta:float):
 	var y = 0.2
 	var dot = to_hand.dot(-flashlight.global_basis.z)
 	var map = remap(clamp(dot,1-y,1),1-y,1,0,1)
-	flashlight.light_energy = lerp(1.5,0.05, map)
+	flashlight.light_energy = lerp(1.0,0.1, map)
 
 func ray_process(delta:float):
 	var moving = false
@@ -85,15 +86,22 @@ func ray_process(delta:float):
 		moving = true
 		
 		var depth_change = 0
-		if ray.get_collider().is_in_group("up"): depth_change = -1
-		elif ray.get_collider().is_in_group("down"): depth_change = 1
+		if ray.get_collider().is_in_group("up") and can_up:
+			depth_change = -1
+			move_sfx.pitch_scale = 1.1
+		elif ray.get_collider().is_in_group("down"):
+			move_sfx.pitch_scale = 0.9
+			depth_change = 1
+		ray.get_collider().get_node("CSGCylinder3D").position.y = -0.002
 		
-		var fall_speed = 1
-		if depth < start_depth: depth_change = clamp(depth_change,0,1)
+		var fall_speed = 0.5
+		if depth < start_depth:
+			depth_change = clamp(depth_change,0,1)
+			moving = false
 		depth += depth_change * delta * fall_speed
 		
-		handheld.set_depth_bar(depth)
-		handheld.set_depth_text(depth)
+		handheld.set_depth_bar(depth * 2)
+		handheld.set_depth_text(depth * 2)
 		
 		environment.global_position.y = depth
 		#environment.global_position.y += depth_change * delta * fall_speed

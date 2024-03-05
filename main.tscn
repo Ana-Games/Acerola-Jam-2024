@@ -1,10 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://bwymxqddufves"]
+[gd_scene load_steps=12 format=3 uid="uid://bwymxqddufves"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_5chty"]
 [ext_resource type="PackedScene" uid="uid://bcaif505htlu8" path="res://models/environment/test.blend" id="1_h7q6n"]
 [ext_resource type="Material" uid="uid://ns33efw5jncx" path="res://media/rock.tres" id="2_nph66"]
-[ext_resource type="PackedScene" uid="uid://bjaetrpc72q54" path="res://scene/hand_held.tscn" id="2_u3e0s"]
-[ext_resource type="AudioStream" uid="uid://b5nquan3x5sle" path="res://sounds/test.wav" id="5_4pk6l"]
+[ext_resource type="PackedScene" uid="uid://c57svi44sdapd" path="res://scene/event.tscn" id="3_81ku4"]
+[ext_resource type="PackedScene" uid="uid://crqhj2fpvadgh" path="res://scene/player.tscn" id="3_sgd4o"]
+[ext_resource type="AudioStream" uid="uid://b5nquan3x5sle" path="res://sounds/wooowowooo.wav" id="5_4pk6l"]
+[ext_resource type="AudioStream" uid="uid://focwp5ysmb15" path="res://sounds/steps in wood floor.wav" id="5_vnx1r"]
+[ext_resource type="AudioStream" uid="uid://bsb8tr8xjsxw8" path="res://sounds/silent_beast_growl_1.mp3" id="6_jnnjc"]
+[ext_resource type="AudioStream" uid="uid://d0pkxfyvr637m" path="res://sounds/drip.wav" id="6_wbrdc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1m53o"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -24,33 +27,9 @@ fog_light_color = Color(0, 0, 0, 1)
 fog_density = 0.02
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0.376471, 0.376471, 0.376471, 1)
 volumetric_fog_emission_energy = 1024.0
 volumetric_fog_sky_affect = 0.0
-
-[sub_resource type="Curve3D" id="Curve3D_p3igo"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, -0.7, 0, -0.2, 0, 0, 0, 0, 0, 0, 0, 0, 10, -0.4),
-"tilts": PackedFloat32Array(0, 0)
-}
-point_count = 2
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kgx02"]
-albedo_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
-metallic = 0.74
-
-[sub_resource type="FogMaterial" id="FogMaterial_t27mw"]
-density = 8.0
-albedo = Color(0, 0, 0, 1)
-
-[sub_resource type="Gradient" id="Gradient_b1xlu"]
-interpolation_mode = 1
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_sa0xv"]
-gradient = SubResource("Gradient_b1xlu")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
 
 [node name="main" type="Node3D"]
 
@@ -61,108 +40,118 @@ fill_to = Vector2(0.5, 0)
 [node name="Cube" parent="Environment/test" index="0"]
 surface_material_override/0 = ExtResource("2_nph66")
 
+[node name="Event_0" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.452, 0)
+
+[node name="Event_1" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -24.5224, 0)
+
+[node name="Drones" type="AudioStreamPlayer" parent="Environment/Event_1"]
+stream = ExtResource("5_4pk6l")
+volume_db = -15.0
+pitch_scale = 0.5
+
+[node name="Footsteps5" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -81.8942, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Footsteps5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+stream = ExtResource("5_vnx1r")
+max_distance = 10.0
+panning_strength = 2.0
+
+[node name="Footsteps4" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -68.316, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Footsteps4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+stream = ExtResource("5_vnx1r")
+max_distance = 10.0
+panning_strength = 2.0
+
+[node name="WaterDrip" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -73.2672, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WaterDrip"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.49939, 0, 5.81057)
+stream = ExtResource("6_wbrdc")
+volume_db = -15.0
+max_distance = 10.0
+panning_strength = 2.0
+
+[node name="Footsteps3" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -167.492, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Footsteps3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9482, 0, 0)
+stream = ExtResource("5_vnx1r")
+pitch_scale = 0.9
+max_distance = 10.0
+panning_strength = 2.0
+
+[node name="Event_3" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -107.55, 0)
+
+[node name="Event_4" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -129.001, 0)
+
+[node name="Event_5" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -140.869, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5681, -2.2397, 0)
+stream = ExtResource("6_jnnjc")
+volume_db = -10.0
+pitch_scale = 0.1
+max_distance = 20.0
+panning_strength = 2.0
+
+[node name="Footsteps2" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -144.761, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Footsteps2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37405, 0, 6.61528)
+stream = ExtResource("5_vnx1r")
+max_distance = 10.0
+panning_strength = 2.0
+
+[node name="Footsteps" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -156.156, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Footsteps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.7578, 0)
+stream = ExtResource("5_vnx1r")
+pitch_scale = 1.1
+max_distance = 10.0
+panning_strength = 2.0
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7vgpj")
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("environment") groups=["player"]]
-script = ExtResource("1_5chty")
-look_sensitivity = Vector2(0.6, 0.6)
+[node name="Player" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("3_sgd4o")]
 environment = NodePath("../Environment")
 
-[node name="Flashlight" type="SpotLight3D" parent="Player"]
-layers = 3
-light_color = Color(1, 1, 0.870588, 1)
-light_energy = 0.5
-spot_angle = 20.0
-spot_angle_attenuation = 3.24901
-
-[node name="Path3D" type="Path3D" parent="Player"]
-curve = SubResource("Curve3D_p3igo")
-
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Player/Path3D"]
-layers = 2
-polygon = PackedVector2Array(-0.002, -0.002, -0.002, 0.002, 0.002, 0.002, 0.002, -0.002)
-mode = 2
-path_node = NodePath("..")
-path_interval_type = 0
-path_interval = 0.1
-path_simplify_angle = 0.0
-path_rotation = 2
-path_local = false
-path_continuous_u = true
-path_u_distance = 1.0
-path_joined = false
-smooth_faces = true
-material = SubResource("StandardMaterial3D_kgx02")
-
-[node name="HandHeld" parent="Player/Path3D" instance=ExtResource("2_u3e0s")]
+[node name="HandHeld" parent="Player/Path3D" index="1"]
 transform = Transform3D(1, 0, 0, 0, 0.403169, -0.915123, 0, 0.915123, 0.403169, 0, -0.0560129, -0.136663)
-progress = 0.2
-screen_active = false
 
-[node name="Neck" type="Node3D" parent="Player"]
-
-[node name="Camera3D" type="Camera3D" parent="Player/Neck"]
-fov = 60.0
-near = 0.001
-
-[node name="RayCast3D" type="RayCast3D" parent="Player/Neck/Camera3D"]
-target_position = Vector3(0, 0, -1)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Player"]
-layers = 2
-light_energy = 0.02
-light_volumetric_fog_energy = 5.0
-light_cull_mask = 4294967294
-omni_range = 1.0
-
-[node name="FogVolume" type="FogVolume" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.65313, 0)
-visible = false
-layers = 3
-size = Vector3(10, 5, 10)
-material = SubResource("FogMaterial_t27mw")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Player"]
-
-[node name="Control" type="Control" parent="Player/CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Crosshair" type="TextureRect" parent="Player/CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.1, 0.1)
-pivot_offset = Vector2(32, 32)
-texture = SubResource("GradientTexture2D_sa0xv")
-
-[node name="Move" type="AudioStreamPlayer3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.161198)
-volume_db = -25.0
-max_db = 0.1
-pitch_scale = 1.7
-max_distance = 0.5
-max_polyphony = 3
-panning_strength = 2.0
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_4pk6l")
-volume_db = -20.0
-pitch_scale = 0.5
-autoplay = true
+[connection signal="on_enter" from="Environment/Event_0" to="Player/Path3D/HandHeld" method="clear_text"]
+[connection signal="on_enter" from="Environment/Event_0" to="Player/Path3D/HandHeld" method="add_to_stack" binds= ["good luck."]]
+[connection signal="on_enter" from="Environment/Event_1" to="Player/Path3D/HandHeld" method="clear_text"]
+[connection signal="on_enter" from="Environment/Event_1" to="Environment/Event_1/Drones" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/Event_1" to="Player/Path3D/HandHeld" method="add_to_stack" binds= ["Ground 250m"]]
+[connection signal="on_enter" from="Environment/Footsteps5" to="Player/Path3D/HandHeld" method="clear_text"]
+[connection signal="on_enter" from="Environment/Footsteps5" to="Environment/Footsteps5/AudioStreamPlayer3D" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/Footsteps5" to="Player/Path3D/HandHeld" method="add_to_stack" binds= ["IR Probes gave us a vague shape"]]
+[connection signal="on_enter" from="Environment/Footsteps4" to="Environment/Footsteps4/AudioStreamPlayer3D" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/WaterDrip" to="Environment/WaterDrip/AudioStreamPlayer3D" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/Footsteps3" to="Environment/Footsteps3/AudioStreamPlayer3D" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/Event_3" to="Player/Path3D/HandHeld" method="clear_text"]
+[connection signal="on_enter" from="Environment/Event_3" to="Player/Path3D/HandHeld" method="add_to_stack" binds= ["But EM waves over 800 nm are distorted"]]
+[connection signal="on_enter" from="Environment/Event_4" to="Player/Path3D/HandHeld" method="clear_text"]
+[connection signal="on_enter" from="Environment/Event_4" to="Player/Path3D/HandHeld" method="add_to_stack" binds= ["No heat signatures were found for life."]]
+[connection signal="on_enter" from="Environment/Event_5" to="Environment/Event_5/AudioStreamPlayer3D" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/Footsteps2" to="Environment/Footsteps2/AudioStreamPlayer3D" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/Footsteps" to="Environment/Footsteps/AudioStreamPlayer3D" method="play" binds= [0.0]]
 
 [editable path="Environment/test"]
+[editable path="Player"]

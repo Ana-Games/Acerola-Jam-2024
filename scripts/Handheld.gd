@@ -15,9 +15,7 @@ signal stack_finished
 
 func _ready():
 	toggle_screen(screen_active)
-	var msg = "morse code is really interesting i promise this can be a good game mechanic"
-	add_to_stack(msg)
-	print(str(get_morse_time(msg)))
+	#print(get_morse_time("ground is depth 200"))
 
 func add_to_stack(string:String):
 	for x in string:

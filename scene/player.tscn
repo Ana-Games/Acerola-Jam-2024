@@ -1,0 +1,124 @@
+[gd_scene load_steps=9 format=3 uid="uid://crqhj2fpvadgh"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_kut31"]
+[ext_resource type="PackedScene" uid="uid://bjaetrpc72q54" path="res://scene/hand_held.tscn" id="2_equrj"]
+[ext_resource type="AudioStream" uid="uid://wamp1e8qh1u4" path="res://sounds/radiator.wav" id="3_klwil"]
+
+[sub_resource type="Curve3D" id="Curve3D_p3igo"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, -0.7, 0, -0.2, 0, 0, 0, 0, 0, 0, 0, 0, 10, -0.4),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kgx02"]
+albedo_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+metallic = 0.74
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrv24"]
+radius = 0.1
+
+[sub_resource type="Gradient" id="Gradient_b1xlu"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sa0xv"]
+gradient = SubResource("Gradient_b1xlu")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="Player" type="Node3D" groups=["player"]]
+script = ExtResource("1_kut31")
+look_sensitivity = Vector2(0.6, 0.6)
+
+[node name="Flashlight" type="SpotLight3D" parent="."]
+layers = 3
+light_color = Color(1, 1, 0.870588, 1)
+light_energy = 0.5
+spot_range = 20.0
+spot_angle = 20.0
+spot_angle_attenuation = 3.24901
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_p3igo")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Path3D"]
+layers = 2
+polygon = PackedVector2Array(-0.002, -0.002, -0.002, 0.002, 0.002, 0.002, 0.002, -0.002)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 0.1
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+smooth_faces = true
+material = SubResource("StandardMaterial3D_kgx02")
+
+[node name="HandHeld" parent="Path3D" instance=ExtResource("2_equrj")]
+transform = Transform3D(1, 0, 0, 0, 0.403169, -0.915123, 0, 0.915123, 0.403169, 0, -0.0560129, -0.136663)
+progress = 0.2
+
+[node name="Neck" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Neck"]
+fov = 60.0
+near = 0.001
+
+[node name="RayCast3D" type="RayCast3D" parent="Neck/Camera3D"]
+target_position = Vector3(0, 0, -1)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Neck"]
+layers = 2
+light_energy = 0.02
+light_volumetric_fog_energy = 5.0
+light_cull_mask = 4294967294
+omni_range = 1.0
+
+[node name="PlayerCol" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerCol"]
+shape = SubResource("SphereShape3D_xrv24")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crosshair" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+pivot_offset = Vector2(32, 32)
+texture = SubResource("GradientTexture2D_sa0xv")
+
+[node name="Move" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.161198)
+stream = ExtResource("3_klwil")
+volume_db = -18.0
+max_db = 0.5
+autoplay = true
+max_distance = 1.0
+max_polyphony = 3
+panning_strength = 2.0
