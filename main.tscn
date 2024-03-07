@@ -1,13 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://bwymxqddufves"]
+[gd_scene load_steps=11 format=3 uid="uid://bwymxqddufves"]
 
 [ext_resource type="PackedScene" uid="uid://bcaif505htlu8" path="res://models/environment/test.blend" id="1_h7q6n"]
 [ext_resource type="Material" uid="uid://ns33efw5jncx" path="res://media/rock.tres" id="2_nph66"]
 [ext_resource type="PackedScene" uid="uid://c57svi44sdapd" path="res://scene/event.tscn" id="3_81ku4"]
 [ext_resource type="PackedScene" uid="uid://crqhj2fpvadgh" path="res://scene/player.tscn" id="3_sgd4o"]
 [ext_resource type="AudioStream" uid="uid://b5nquan3x5sle" path="res://sounds/wooowowooo.wav" id="5_4pk6l"]
-[ext_resource type="AudioStream" uid="uid://focwp5ysmb15" path="res://sounds/steps in wood floor.wav" id="5_vnx1r"]
-[ext_resource type="AudioStream" uid="uid://bsb8tr8xjsxw8" path="res://sounds/silent_beast_growl_1.mp3" id="6_jnnjc"]
-[ext_resource type="AudioStream" uid="uid://d0pkxfyvr637m" path="res://sounds/drip.wav" id="6_wbrdc"]
+[ext_resource type="AudioStream" uid="uid://dlgsfq83xvbda" path="res://sounds/gettingsettorecordthunder.mp3" id="5_dhunv"]
+[ext_resource type="AudioStream" uid="uid://focwp5ysmb15" path="res://sounds/steps in wood floor.wav" id="6_gptpn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1m53o"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -41,89 +40,83 @@ volumetric_fog_sky_affect = 0.0
 surface_material_override/0 = ExtResource("2_nph66")
 
 [node name="Event_0" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.452, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -33.0265, 0)
+message = "good luck."
 
 [node name="Event_1" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -24.5224, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -46.1322, 0)
+message = "Ground 350m"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -3, 0)
+stream = ExtResource("5_dhunv")
+volume_db = -10.0
+pitch_scale = 0.5
+autoplay = true
+max_distance = 10.0
 
 [node name="Drones" type="AudioStreamPlayer" parent="Environment/Event_1"]
 stream = ExtResource("5_4pk6l")
 volume_db = -15.0
 pitch_scale = 0.5
 
-[node name="Footsteps5" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -81.8942, 0)
+[node name="Event_2" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -59.7162, 0)
+message = "no heat signatures found by probes"
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Footsteps5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
-stream = ExtResource("5_vnx1r")
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -3, 2.9676)
+stream = ExtResource("6_gptpn")
+volume_db = -3.0
+pitch_scale = 0.5
+autoplay = true
 max_distance = 10.0
-panning_strength = 2.0
-
-[node name="Footsteps4" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -68.316, 0)
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Footsteps4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
-stream = ExtResource("5_vnx1r")
-max_distance = 10.0
-panning_strength = 2.0
-
-[node name="WaterDrip" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -73.2672, 0)
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/WaterDrip"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.49939, 0, 5.81057)
-stream = ExtResource("6_wbrdc")
-volume_db = -15.0
-max_distance = 10.0
-panning_strength = 2.0
-
-[node name="Footsteps3" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -167.492, 0)
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Footsteps3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9482, 0, 0)
-stream = ExtResource("5_vnx1r")
-pitch_scale = 0.9
-max_distance = 10.0
-panning_strength = 2.0
 
 [node name="Event_3" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -107.55, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -77.6308, 0)
+script = null
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Environment/Event_3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -0.5783, 1.65772)
+stream = ExtResource("6_gptpn")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+
+[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Environment/Event_3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.37621, -1.91126, -0.673441)
+stream = ExtResource("6_gptpn")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Environment/Event_3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.826544, -5.18457, 0.150648)
+stream = ExtResource("6_gptpn")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
 
 [node name="Event_4" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -129.001, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -109.704, 0)
+message = "Your temperature is dropping"
 
-[node name="Event_5" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -140.869, 0)
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5681, -2.2397, 0)
-stream = ExtResource("6_jnnjc")
-volume_db = -10.0
-pitch_scale = 0.1
-max_distance = 20.0
-panning_strength = 2.0
-
-[node name="Footsteps2" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -144.761, 0)
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Footsteps2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37405, 0, 6.61528)
-stream = ExtResource("5_vnx1r")
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -3, 2.9676)
+stream = ExtResource("6_gptpn")
+volume_db = -3.0
+pitch_scale = 0.5
+autoplay = true
 max_distance = 10.0
-panning_strength = 2.0
-
-[node name="Footsteps" parent="Environment" instance=ExtResource("3_81ku4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -156.156, 0)
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Footsteps"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.7578, 0)
-stream = ExtResource("5_vnx1r")
-pitch_scale = 1.1
-max_distance = 10.0
-panning_strength = 2.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7vgpj")
@@ -134,24 +127,10 @@ environment = NodePath("../Environment")
 [node name="HandHeld" parent="Player/Path3D" index="1"]
 transform = Transform3D(1, 0, 0, 0, 0.403169, -0.915123, 0, 0.915123, 0.403169, 0, -0.0560129, -0.136663)
 
-[connection signal="on_enter" from="Environment/Event_0" to="Player/Path3D/HandHeld" method="clear_text"]
-[connection signal="on_enter" from="Environment/Event_0" to="Player/Path3D/HandHeld" method="add_to_stack" binds= ["good luck."]]
-[connection signal="on_enter" from="Environment/Event_1" to="Player/Path3D/HandHeld" method="clear_text"]
+[node name="Move" parent="Player" index="5"]
+volume_db = -15.0
+
 [connection signal="on_enter" from="Environment/Event_1" to="Environment/Event_1/Drones" method="play" binds= [0.0]]
-[connection signal="on_enter" from="Environment/Event_1" to="Player/Path3D/HandHeld" method="add_to_stack" binds= ["Ground 250m"]]
-[connection signal="on_enter" from="Environment/Footsteps5" to="Player/Path3D/HandHeld" method="clear_text"]
-[connection signal="on_enter" from="Environment/Footsteps5" to="Environment/Footsteps5/AudioStreamPlayer3D" method="play" binds= [0.0]]
-[connection signal="on_enter" from="Environment/Footsteps5" to="Player/Path3D/HandHeld" method="add_to_stack" binds= ["IR Probes gave us a vague shape"]]
-[connection signal="on_enter" from="Environment/Footsteps4" to="Environment/Footsteps4/AudioStreamPlayer3D" method="play" binds= [0.0]]
-[connection signal="on_enter" from="Environment/WaterDrip" to="Environment/WaterDrip/AudioStreamPlayer3D" method="play" binds= [0.0]]
-[connection signal="on_enter" from="Environment/Footsteps3" to="Environment/Footsteps3/AudioStreamPlayer3D" method="play" binds= [0.0]]
-[connection signal="on_enter" from="Environment/Event_3" to="Player/Path3D/HandHeld" method="clear_text"]
-[connection signal="on_enter" from="Environment/Event_3" to="Player/Path3D/HandHeld" method="add_to_stack" binds= ["But EM waves over 800 nm are distorted"]]
-[connection signal="on_enter" from="Environment/Event_4" to="Player/Path3D/HandHeld" method="clear_text"]
-[connection signal="on_enter" from="Environment/Event_4" to="Player/Path3D/HandHeld" method="add_to_stack" binds= ["No heat signatures were found for life."]]
-[connection signal="on_enter" from="Environment/Event_5" to="Environment/Event_5/AudioStreamPlayer3D" method="play" binds= [0.0]]
-[connection signal="on_enter" from="Environment/Footsteps2" to="Environment/Footsteps2/AudioStreamPlayer3D" method="play" binds= [0.0]]
-[connection signal="on_enter" from="Environment/Footsteps" to="Environment/Footsteps/AudioStreamPlayer3D" method="play" binds= [0.0]]
 
 [editable path="Environment/test"]
 [editable path="Player"]

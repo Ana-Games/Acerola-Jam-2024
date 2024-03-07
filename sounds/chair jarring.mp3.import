@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b2jdhovamfa4s"
+path="res://.godot/imported/chair jarring.mp3-3e138e8e7aafd0aa1897a0b8c3b96276.mp3str"
+
+[deps]
+
+source_file="res://sounds/chair jarring.mp3"
+dest_files=["res://.godot/imported/chair jarring.mp3-3e138e8e7aafd0aa1897a0b8c3b96276.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

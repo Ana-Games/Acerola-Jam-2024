@@ -72,13 +72,13 @@ func path_sway(delta: float):
 	path.rotation_degrees.y = lerp(path.rotation_degrees.y, new_rot, delta * speed)
 
 func lerp_flashlight(delta:float):
-	flashlight.global_basis = lerp(flashlight.global_basis, camera.global_basis, delta * 4)
+	flashlight.global_basis = lerp(flashlight.global_basis, camera.global_basis, delta * 5)
 	
 	var to_hand = (handheld.global_position - camera.global_position).normalized()
 	var y = 0.2
 	var dot = to_hand.dot(-flashlight.global_basis.z)
 	var map = remap(clamp(dot,1-y,1),1-y,1,0,1)
-	flashlight.light_energy = lerp(1.0,0.1, map)
+	flashlight.light_energy = lerp(0.8,0.1, map)
 
 func ray_process(delta:float):
 	var moving = false
