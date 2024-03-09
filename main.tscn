@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bwymxqddufves"]
+[gd_scene load_steps=14 format=3 uid="uid://bwymxqddufves"]
 
 [ext_resource type="PackedScene" uid="uid://bcaif505htlu8" path="res://models/environment/test.blend" id="1_h7q6n"]
 [ext_resource type="Material" uid="uid://ns33efw5jncx" path="res://media/rock.tres" id="2_nph66"]
@@ -7,6 +7,9 @@
 [ext_resource type="AudioStream" uid="uid://b5nquan3x5sle" path="res://sounds/wooowowooo.wav" id="5_4pk6l"]
 [ext_resource type="AudioStream" uid="uid://dlgsfq83xvbda" path="res://sounds/gettingsettorecordthunder.mp3" id="5_dhunv"]
 [ext_resource type="AudioStream" uid="uid://focwp5ysmb15" path="res://sounds/steps in wood floor.wav" id="6_gptpn"]
+[ext_resource type="AudioStream" uid="uid://dn84fyywb4tgb" path="res://sounds/alarm rythm sinus.mp3" id="7_3dmk4"]
+[ext_resource type="Script" path="res://scene/crash_event.gd" id="8_brnlp"]
+[ext_resource type="AudioStream" uid="uid://cq82stgd4btym" path="res://sounds/sine/crash.wav" id="9_e2wlw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1m53o"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -45,7 +48,7 @@ message = "good luck."
 
 [node name="Event_1" parent="Environment" instance=ExtResource("3_81ku4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -46.1322, 0)
-message = "Ground 350m"
+message = "Ground 400m"
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -3, 0)
@@ -54,11 +57,13 @@ volume_db = -10.0
 pitch_scale = 0.5
 autoplay = true
 max_distance = 10.0
+bus = &"Echo"
 
 [node name="Drones" type="AudioStreamPlayer" parent="Environment/Event_1"]
 stream = ExtResource("5_4pk6l")
 volume_db = -15.0
 pitch_scale = 0.5
+bus = &"Echo"
 
 [node name="Event_2" parent="Environment" instance=ExtResource("3_81ku4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -59.7162, 0)
@@ -71,6 +76,7 @@ volume_db = -3.0
 pitch_scale = 0.5
 autoplay = true
 max_distance = 10.0
+bus = &"Echo"
 
 [node name="Event_3" parent="Environment" instance=ExtResource("3_81ku4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -77.6308, 0)
@@ -85,6 +91,7 @@ pitch_scale = 0.5
 autoplay = true
 max_distance = 8.0
 panning_strength = 3.0
+bus = &"Echo"
 
 [node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Environment/Event_3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.37621, -1.91126, -0.673441)
@@ -95,6 +102,7 @@ pitch_scale = 0.5
 autoplay = true
 max_distance = 8.0
 panning_strength = 3.0
+bus = &"Echo"
 
 [node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Environment/Event_3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.826544, -5.18457, 0.150648)
@@ -105,6 +113,7 @@ pitch_scale = 0.5
 autoplay = true
 max_distance = 8.0
 panning_strength = 3.0
+bus = &"Echo"
 
 [node name="Event_4" parent="Environment" instance=ExtResource("3_81ku4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -109.704, 0)
@@ -117,6 +126,65 @@ volume_db = -3.0
 pitch_scale = 0.5
 autoplay = true
 max_distance = 10.0
+bus = &"Echo"
+
+[node name="Event_5" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -154.952, 0)
+message = "It might be getting dark but do not worry the path is very linear"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -3, 2.9676)
+stream = ExtResource("6_gptpn")
+volume_db = -3.0
+pitch_scale = 0.5
+autoplay = true
+max_distance = 7.0
+bus = &"Echo"
+
+[node name="Event_6" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -177.452, 0)
+
+[node name="WOWOWOW" type="AudioStreamPlayer3D" parent="Environment/Event_6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.81403, 0.0976257, 2.9676)
+stream = ExtResource("5_4pk6l")
+volume_db = -15.0
+max_db = 0.5
+pitch_scale = 1.5
+autoplay = true
+max_distance = 15.0
+panning_strength = 2.0
+bus = &"Echo"
+emission_angle_degrees = 90.0
+
+[node name="Alarm" type="AudioStreamPlayer3D" parent="Environment/Event_6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.97671, 0.14296, 2.9676)
+stream = ExtResource("7_3dmk4")
+volume_db = -15.0
+max_db = 1.0
+autoplay = true
+max_distance = 15.0
+panning_strength = 2.0
+bus = &"Echo"
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Environment/Event_6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5286, 1.43103, -1.39289)
+light_color = Color(0, 0.85098, 0.968627, 1)
+light_energy = 30.0
+omni_range = 15.0
+omni_attenuation = 1.5
+
+[node name="Event_7" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -193.794, 0)
+script = ExtResource("8_brnlp")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment/Event_7"]
+stream = ExtResource("9_e2wlw")
+volume_db = -8.0
+bus = &"Echo"
+
+[node name="Timer" type="Timer" parent="Environment/Event_7"]
+wait_time = 20.0
+one_shot = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7vgpj")
@@ -131,6 +199,8 @@ transform = Transform3D(1, 0, 0, 0, 0.403169, -0.915123, 0, 0.915123, 0.403169, 
 volume_db = -15.0
 
 [connection signal="on_enter" from="Environment/Event_1" to="Environment/Event_1/Drones" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/Event_7" to="Environment/Event_7/AudioStreamPlayer" method="play" binds= [0.0]]
+[connection signal="timeout" from="Environment/Event_7/Timer" to="Environment/Event_7" method="_on_timer_timeout"]
 
 [editable path="Environment/test"]
 [editable path="Player"]

@@ -1,9 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://crqhj2fpvadgh"]
+[gd_scene load_steps=17 format=3 uid="uid://crqhj2fpvadgh"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kut31"]
 [ext_resource type="PackedScene" uid="uid://bjaetrpc72q54" path="res://scene/hand_held.tscn" id="2_equrj"]
+[ext_resource type="Texture2D" uid="uid://crhbktl4pl851" path="res://media/wire/metal_0040_ao_1k.jpg" id="2_mn310"]
 [ext_resource type="AudioStream" uid="uid://wamp1e8qh1u4" path="res://sounds/radiator.wav" id="3_klwil"]
 [ext_resource type="AudioStream" uid="uid://x5cvln72baju" path="res://sounds/radio/radio_message_2.wav" id="3_re1cr"]
+[ext_resource type="Texture2D" uid="uid://b3s0yymnfvilm" path="res://media/wire/metal_0040_height_1k.png" id="3_yxw2d"]
+[ext_resource type="Texture2D" uid="uid://d187r7yekh0bu" path="res://media/wire/metal_0040_metallic_1k.jpg" id="4_qw7ix"]
+[ext_resource type="Texture2D" uid="uid://d1m33wkb3rg3d" path="res://media/wire/metal_0040_normal_direct_1k.png" id="5_wskyp"]
+[ext_resource type="Texture2D" uid="uid://bhxrgqwp4fnrc" path="res://media/wire/metal_0040_roughness_1k.jpg" id="6_cxh7i"]
 
 [sub_resource type="Curve3D" id="Curve3D_p3igo"]
 _data = {
@@ -13,8 +18,15 @@ _data = {
 point_count = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kgx02"]
-albedo_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
-metallic = 0.74
+albedo_color = Color(0.447059, 0.447059, 0.447059, 1)
+albedo_texture = ExtResource("2_mn310")
+metallic = 1.0
+metallic_texture = ExtResource("4_qw7ix")
+roughness_texture = ExtResource("6_cxh7i")
+normal_enabled = true
+normal_texture = ExtResource("5_wskyp")
+heightmap_enabled = true
+heightmap_texture = ExtResource("3_yxw2d")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrv24"]
 radius = 0.1
@@ -55,7 +67,7 @@ curve = SubResource("Curve3D_p3igo")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="Path3D"]
 layers = 2
-polygon = PackedVector2Array(-0.002, -0.002, -0.002, 0.002, 0.002, 0.002, 0.002, -0.002)
+polygon = PackedVector2Array(-0.001, -0.001, -0.001, 0.001, 0.001, 0.001, 0.001, -0.001)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -64,7 +76,7 @@ path_simplify_angle = 0.0
 path_rotation = 2
 path_local = false
 path_continuous_u = true
-path_u_distance = 1.0
+path_u_distance = 0.03
 path_joined = false
 smooth_faces = true
 material = SubResource("StandardMaterial3D_kgx02")
@@ -78,7 +90,6 @@ stream = ExtResource("3_re1cr")
 volume_db = -4.0
 autoplay = true
 max_distance = 0.2
-panning_strength = 2.0
 
 [node name="Neck" type="Node3D" parent="."]
 
@@ -90,6 +101,7 @@ near = 0.001
 target_position = Vector3(0, 0, -1)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Neck"]
+visible = false
 layers = 2
 light_energy = 0.02
 light_volumetric_fog_energy = 5.0
@@ -147,3 +159,4 @@ autoplay = true
 max_distance = 1.0
 max_polyphony = 3
 panning_strength = 2.0
+bus = &"Echo"

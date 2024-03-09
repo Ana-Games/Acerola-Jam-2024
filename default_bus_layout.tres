@@ -1,8 +1,17 @@
 [gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://bs3bg3j4py82i"]
 
-[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_1cmqw"]
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_gj6is"]
 resource_name = "Reverb"
+room_size = 0.5
+damping = 1.0
+wet = 0.8
 
 [resource]
-bus/0/effect/0/effect = SubResource("AudioEffectReverb_1cmqw")
-bus/0/effect/0/enabled = true
+bus/1/name = &"Echo"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectReverb_gj6is")
+bus/1/effect/0/enabled = true

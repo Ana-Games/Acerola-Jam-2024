@@ -40,7 +40,7 @@ emission = Color(0.156863, 0.705882, 0.768627, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_bs6yk"]
 material = SubResource("StandardMaterial3D_yvbi2")
-size = Vector2(0.07, 0.05)
+size = Vector2(0.05, 0.05)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_qlc44"]
 viewport_path = NodePath("DepthUI")
@@ -106,7 +106,7 @@ spot_range = 0.05
 spot_angle = 90.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Offset/Screen"]
-transform = Transform3D(1, 6.55651e-07, 0, 2.98023e-08, 1, 0, 0, 0, 1, -0.000667789, 0.0016837, 0)
+transform = Transform3D(1, 6.4075e-07, 0, 4.47035e-08, 1, 0, 0, 0, 1, 0.00219066, 0.0178948, 0)
 layers = 2
 light_color = Color(0, 1, 1, 1)
 light_energy = 0.4
@@ -119,12 +119,12 @@ omni_attenuation = 0.535887
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Offset/Screen"]
 transform = Transform3D(1, 0, 0, 1.49012e-08, 1, 0, 0, 0, 1, 0.00116085, 0.00658355, 0)
-layers = 2
+layers = 4
 mesh = SubResource("PlaneMesh_bs6yk")
 
 [node name="Depth" type="MeshInstance3D" parent="Offset"]
 transform = Transform3D(1, 0, 0, 1.49012e-08, 1, 0, 0, 0, 1, 0.00573966, 0.0113414, 0.0178414)
-layers = 2
+layers = 4
 material_override = SubResource("StandardMaterial3D_1xpak")
 mesh = SubResource("PlaneMesh_koj6l")
 skeleton = NodePath("../Model")
@@ -136,7 +136,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0013233, 0.00491646, -7.707
 transform = Transform3D(1, 0, 0, 1.49012e-08, 1, 0, 0, 0, 1, -0.0021927, 0.0123517, 0.0140176)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="Offset/Up"]
-layers = 2
+layers = 4
 radius = 0.003
 height = 0.002
 sides = 10
@@ -150,7 +150,7 @@ shape = SubResource("BoxShape3D_fj1mi")
 transform = Transform3D(1, 0, 0, 1.49012e-08, 1, 0, 0, 0, 1, -0.0021927, 0.0123517, 0.0229166)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="Offset/Down"]
-layers = 2
+layers = 4
 radius = 0.003
 height = 0.002
 sides = 10
@@ -164,6 +164,7 @@ shape = SubResource("BoxShape3D_fj1mi")
 stream = ExtResource("4_qfcty")
 volume_db = -30.0
 max_db = 0.1
+pitch_scale = 0.8
 max_distance = 0.2
 max_polyphony = 3
 panning_strength = 2.0
@@ -172,12 +173,13 @@ panning_strength = 2.0
 stream = ExtResource("5_a74ia")
 volume_db = -30.0
 max_db = 0.1
+pitch_scale = 0.8
 max_distance = 0.2
 max_polyphony = 3
 panning_strength = 2.0
 
 [node name="MorseTick" type="Timer" parent="."]
-wait_time = 0.12
+wait_time = 0.15
 autostart = true
 
 [node name="WordEnd" type="Timer" parent="."]
