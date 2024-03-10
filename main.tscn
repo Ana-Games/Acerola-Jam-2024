@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bwymxqddufves"]
+[gd_scene load_steps=15 format=3 uid="uid://bwymxqddufves"]
 
 [ext_resource type="PackedScene" uid="uid://bcaif505htlu8" path="res://models/environment/test.blend" id="1_h7q6n"]
 [ext_resource type="Material" uid="uid://ns33efw5jncx" path="res://media/rock.tres" id="2_nph66"]
@@ -10,6 +10,9 @@
 [ext_resource type="AudioStream" uid="uid://dn84fyywb4tgb" path="res://sounds/alarm rythm sinus.mp3" id="7_3dmk4"]
 [ext_resource type="Script" path="res://scene/crash_event.gd" id="8_brnlp"]
 [ext_resource type="AudioStream" uid="uid://cq82stgd4btym" path="res://sounds/sine/crash.wav" id="9_e2wlw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ln406"]
+shading_mode = 0
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1m53o"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -41,6 +44,9 @@ volumetric_fog_sky_affect = 0.0
 
 [node name="Cube" parent="Environment/test" index="0"]
 surface_material_override/0 = ExtResource("2_nph66")
+
+[node name="Cube_001" parent="Environment/test" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ln406")
 
 [node name="Event_0" parent="Environment" instance=ExtResource("3_81ku4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -33.0265, 0)
@@ -167,11 +173,11 @@ panning_strength = 2.0
 bus = &"Echo"
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Environment/Event_6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5286, 1.43103, -1.39289)
-light_color = Color(0, 0.85098, 0.968627, 1)
-light_energy = 30.0
-omni_range = 15.0
-omni_attenuation = 1.5
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5286, 0.77066, -1.39289)
+light_color = Color(0.545098, 0.933333, 0.776471, 1)
+light_energy = 200.0
+omni_range = 10.0
+omni_attenuation = 1.5529
 
 [node name="Event_7" parent="Environment" instance=ExtResource("3_81ku4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -193.794, 0)
@@ -183,8 +189,36 @@ volume_db = -8.0
 bus = &"Echo"
 
 [node name="Timer" type="Timer" parent="Environment/Event_7"]
-wait_time = 20.0
+wait_time = 15.0
 one_shot = true
+
+[node name="Event_8" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -211.235, 0)
+message = "h# h# h#  h# h# h# e# e# h#"
+
+[node name="Event_9" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -220.108, 0)
+message = "we are having issues up top"
+
+[node name="Event_10" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -232.346, 0)
+message = "keep gh#oinh#g h# h#e#l#l#o# "
+
+[node name="Event_11" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -243.435, 0)
+message = "i# a#m# l#e#a#r#n#i#n#g#"
+
+[node name="Event_12" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -254.226, 0)
+message = "c#a#n# y#o#u# h#e#a#r# m#e# t#a#p#p#i#n#g#"
+
+[node name="Event_13" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -265.585, 0)
+message = "SOS SOS SOS SOS"
+
+[node name="Event_14" parent="Environment" instance=ExtResource("3_81ku4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -269.174, 0)
+message = "w#h#y# a#r#e# y#o#u# h#e#r#e#"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7vgpj")

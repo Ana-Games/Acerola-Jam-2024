@@ -18,8 +18,9 @@ var stored_look_vector : Vector2
 
 @export var environment : Node3D
 var can_up = true as bool
+var can_move = true as bool
 var depth :float
-const start_depth = 5 as float
+const start_depth = 193 as float
 
 func _ready():
 	depth = start_depth
@@ -53,6 +54,9 @@ func _physics_process(delta):
 	lerp_flashlight(delta)
 	ray_process(delta)
 
+func shake():
+	$Neck/Camera3D/AnimationPlayer.play("shake")
+
 func look():
 	if look_vector == Vector2.ZERO: pass
 		#look_vector = Input.get_vector("look_left","look_right","look_up","look_down") * 15
@@ -82,7 +86,7 @@ func lerp_flashlight(delta:float):
 
 func ray_process(delta:float):
 	var moving = false
-	if Input.is_action_pressed("interact") and ray.is_colliding():
+	if Input.is_action_pressed("interact") and ray.is_colliding() and can_move:
 		moving = true
 		
 		var depth_change = 0

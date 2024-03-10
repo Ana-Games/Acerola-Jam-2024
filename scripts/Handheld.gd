@@ -20,7 +20,7 @@ func _ready():
 func add_to_stack(string:String):
 	for x in string:
 		if x != " ": x = x.capitalize()
-		if Morse.dict.has(x): txt_stack.append(x)
+		if Morse.dict.has(x) or x == "#": txt_stack.append(x)
 		#print(Morse.encrypt(x))
 
 func read_from_stack() -> String:
@@ -34,6 +34,7 @@ var morse_count = 0 as int
 func morse_tick():
 	if not word_end_timer.is_stopped() or txt_stack.size() == 0: return
 	
+	if txt_stack[0] == "#": txt_stack.pop_front()
 	var x = Morse.encrypt(read_from_stack())
 	
 	if morse_count >= x.length():
@@ -49,6 +50,10 @@ func morse_tick():
 	if screen_active:
 		if x[morse_count] == "0": dot_sfx.play()
 		elif x[morse_count] == "1": dash_sfx.play()
+	
+	if txt_stack.size() > 1 and txt_stack[1] == "#":
+		if x[morse_count] == "0": $Tap_Dot.play()
+		elif x[morse_count] == "1": $Tap_Dash.play()
 	
 	print(x[morse_count])
 	morse_count += 1

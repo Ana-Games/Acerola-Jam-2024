@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://crqhj2fpvadgh"]
+[gd_scene load_steps=20 format=3 uid="uid://crqhj2fpvadgh"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kut31"]
 [ext_resource type="PackedScene" uid="uid://bjaetrpc72q54" path="res://scene/hand_held.tscn" id="2_equrj"]
@@ -27,6 +27,67 @@ normal_enabled = true
 normal_texture = ExtResource("5_wskyp")
 heightmap_enabled = true
 heightmap_texture = ExtResource("3_yxw2d")
+
+[sub_resource type="Animation" id="Animation_2wojc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../Path3D/HandHeld/Offset:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.174533)]
+}
+
+[sub_resource type="Animation" id="Animation_cvp5o"]
+resource_name = "shake"
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4, 0.44, 0.48, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.005, 0.005, 0), Vector3(0, -0.005, 0), Vector3(-0.005, 0, 0), Vector3(0.005, 0.005, 0), Vector3(-0.005, 0.005, 0), Vector3(-0.005, 0.005, 0), Vector3(0, -0.005, 0), Vector3(-0.005, 0, 0), Vector3(0.005, 0.005, 0), Vector3(-0.005, 0.005, 0), Vector3(-0.005, 0.005, 0), Vector3(0, -0.005, 0), Vector3(-0.005, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../Path3D/HandHeld/Offset:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.58),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0.174533), Vector3(0, 0, 0.785398)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vl2p2"]
+_data = {
+"RESET": SubResource("Animation_2wojc"),
+"shake": SubResource("Animation_cvp5o")
+}
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrv24"]
 radius = 0.1
@@ -57,8 +118,8 @@ look_sensitivity = Vector2(0.6, 0.6)
 [node name="Flashlight" type="SpotLight3D" parent="."]
 layers = 3
 light_color = Color(1, 1, 0.870588, 1)
-light_energy = 0.5
-spot_range = 4.0
+light_energy = 0.7
+spot_range = 8.0
 spot_angle = 15.0
 spot_angle_attenuation = 1.5
 
@@ -88,7 +149,6 @@ progress = 0.2
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Path3D/HandHeld"]
 stream = ExtResource("3_re1cr")
 volume_db = -4.0
-autoplay = true
 max_distance = 0.2
 
 [node name="Neck" type="Node3D" parent="."]
@@ -99,6 +159,11 @@ near = 0.001
 
 [node name="RayCast3D" type="RayCast3D" parent="Neck/Camera3D"]
 target_position = Vector3(0, 0, -1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Neck/Camera3D"]
+libraries = {
+"": SubResource("AnimationLibrary_vl2p2")
+}
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Neck"]
 visible = false
