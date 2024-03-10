@@ -52,8 +52,8 @@ func morse_tick():
 		elif x[morse_count] == "1": dash_sfx.play()
 	
 	if txt_stack.size() > 1 and txt_stack[1] == "#":
-		if x[morse_count] == "0": $Tap_Dot.play()
-		elif x[morse_count] == "1": $Tap_Dash.play()
+		$Tap.pitch_scale = randf_range(0.9,1.1)
+		$Tap.play()
 	
 	print(x[morse_count])
 	morse_count += 1

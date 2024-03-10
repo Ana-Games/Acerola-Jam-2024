@@ -11,5 +11,7 @@ func _on_body_entered(body):
 		on_enter.emit()
 		complete = true
 		set_deferred("monitoring",false)
-		if message != "": player.handheld.clear_text()
+		if message != "":
+			player.handheld.txt_stack.clear()
+			player.handheld.clear_text()
 		player.handheld.add_to_stack(message)

@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 window/size/mode=3
 
+[filesystem]
+
+import/fbx/enabled=false
+
 [input]
 
 interact={

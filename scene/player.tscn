@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://crqhj2fpvadgh"]
+[gd_scene load_steps=31 format=3 uid="uid://crqhj2fpvadgh"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kut31"]
 [ext_resource type="PackedScene" uid="uid://bjaetrpc72q54" path="res://scene/hand_held.tscn" id="2_equrj"]
@@ -9,6 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://d187r7yekh0bu" path="res://media/wire/metal_0040_metallic_1k.jpg" id="4_qw7ix"]
 [ext_resource type="Texture2D" uid="uid://d1m33wkb3rg3d" path="res://media/wire/metal_0040_normal_direct_1k.png" id="5_wskyp"]
 [ext_resource type="Texture2D" uid="uid://bhxrgqwp4fnrc" path="res://media/wire/metal_0040_roughness_1k.jpg" id="6_cxh7i"]
+[ext_resource type="PackedScene" uid="uid://cryqb1n7w8ls0" path="res://media/spider/scene.gltf" id="9_yhmnf"]
+[ext_resource type="Texture2D" uid="uid://dji5s2l0fbrtf" path="res://media/spider/textures/spider_02_baseColor.jpeg" id="10_v512x"]
+[ext_resource type="Texture2D" uid="uid://dnttgrcsg37bu" path="res://media/spider/textures/spider_02_metallicRoughness.png" id="11_6mi70"]
+[ext_resource type="Texture2D" uid="uid://c0ikavl0hsh8k" path="res://media/spider/textures/spider_02_emissive.png" id="12_5oenw"]
+[ext_resource type="AudioStream" uid="uid://vf71n14gngy7" path="res://sounds/sine/end.wav" id="14_2md8b"]
 
 [sub_resource type="Curve3D" id="Curve3D_p3igo"]
 _data = {
@@ -27,6 +32,120 @@ normal_enabled = true
 normal_texture = ExtResource("5_wskyp")
 heightmap_enabled = true
 heightmap_texture = ExtResource("3_yxw2d")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cayyy"]
+resource_name = "spider_02"
+cull_mode = 2
+albedo_texture = ExtResource("10_v512x")
+metallic = 1.0
+metallic_texture = ExtResource("11_6mi70")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("11_6mi70")
+roughness_texture_channel = 1
+emission_enabled = true
+emission_texture = ExtResource("12_5oenw")
+ao_enabled = true
+ao_texture = ExtResource("11_6mi70")
+texture_filter = 0
+
+[sub_resource type="Animation" id="Animation_7l5g6"]
+resource_name = "aa"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 0.5),
+"update": 0,
+"values": [1.3, 1.3, 0.4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sketchfab_Scene:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.00498568, -0.0341914, 0.000771165)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sketchfab_Scene:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.107904, -0.625581, -0.269973), Vector3(-0.324716, -0.735823, -0.214863)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.45),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_game"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_x83i2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sketchfab_Scene:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.00498568, -0.0341914, 0.000771165)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sketchfab_Scene:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.107904, -0.625581, -0.269973)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pu5vc"]
+_data = {
+"RESET": SubResource("Animation_x83i2"),
+"aa": SubResource("Animation_7l5g6")
+}
 
 [sub_resource type="Animation" id="Animation_2wojc"]
 length = 0.001
@@ -111,16 +230,23 @@ gradient = SubResource("Gradient_0kgbh")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="Gradient" id="Gradient_oxpf0"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ykjq7"]
+gradient = SubResource("Gradient_oxpf0")
+
 [node name="Player" type="Node3D" groups=["player"]]
 script = ExtResource("1_kut31")
-look_sensitivity = Vector2(0.6, 0.6)
+look_sensitivity = Vector2(0.8, 0.8)
 
 [node name="Flashlight" type="SpotLight3D" parent="."]
 layers = 3
 light_color = Color(1, 1, 0.870588, 1)
 light_energy = 0.7
 spot_range = 8.0
-spot_angle = 15.0
+spot_angle = 20.0
 spot_angle_attenuation = 1.5
 
 [node name="Path3D" type="Path3D" parent="."]
@@ -149,11 +275,80 @@ progress = 0.2
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Path3D/HandHeld"]
 stream = ExtResource("3_re1cr")
 volume_db = -4.0
+autoplay = true
 max_distance = 0.2
+
+[node name="Spider" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 0.251806, -0.967769, 0, 0.967769, 0.251806, 0, 0.137751, -0.19452)
+progress = 1.0
+
+[node name="Sketchfab_Scene" parent="Path3D/Spider" instance=ExtResource("9_yhmnf")]
+transform = Transform3D(0.239424, 0.0466258, -0.174649, -0.0795463, 0.287452, -0.0323083, 0.162322, 0.0720935, 0.241773, 0.00498568, -0.0341914, 0.000771165)
+
+[node name="Skeleton3D" parent="Path3D/Spider/Sketchfab_Scene/Sketchfab_model/e2236cece289493c8a23332d65d8332f_fbx/Object_2/RootNode/Spider2Parent/Spider2/root/Object_7" index="0"]
+bones/1/rotation = Quaternion(0.687627, 0.149877, 0.691372, 0.163435)
+bones/2/rotation = Quaternion(0.00810784, -0.00170052, -0.54302, 0.839679)
+bones/3/rotation = Quaternion(0.394395, 0.879885, 0.263119, 0.0320028)
+bones/3/scale = Vector3(1, 1, 0.999999)
+bones/4/rotation = Quaternion(0.152121, 0.0303549, -0.808902, 0.567112)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/rotation = Quaternion(-0.00253084, 0.0104039, -0.44556, 0.895188)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/rotation = Quaternion(0.30349, 0.72375, 0.421422, -0.454405)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/rotation = Quaternion(-0.00264054, 0.0180544, -0.73662, 0.676061)
+bones/7/scale = Vector3(1, 1, 1)
+bones/8/rotation = Quaternion(-0.00319538, -0.00199688, -0.704885, 0.709311)
+bones/9/rotation = Quaternion(-0.358034, -0.568115, -0.46518, 0.576771)
+bones/9/scale = Vector3(0.999999, 1, 1)
+bones/10/rotation = Quaternion(-0.0305662, 0.0696107, -0.779023, 0.622369)
+bones/10/scale = Vector3(0.999999, 1, 1)
+bones/11/rotation = Quaternion(-0.0246594, 0.0625459, -0.448448, 0.891277)
+bones/12/rotation = Quaternion(-0.106283, -0.28429, -0.712844, 0.632247)
+bones/12/scale = Vector3(1, 0.999999, 1)
+bones/13/rotation = Quaternion(-5.76121e-09, -3.11021e-07, -0.551451, 0.834208)
+bones/13/scale = Vector3(0.999999, 1, 1)
+bones/14/rotation = Quaternion(2.69983e-05, 2.33204e-05, -0.760795, 0.648992)
+bones/15/position = Vector3(0.0338498, 0.273239, 0.0938954)
+bones/15/rotation = Quaternion(-0.0464739, -0.155068, 0.844688, 0.510193)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/position = Vector3(0.0338498, 0.273239, -0.0938954)
+bones/16/rotation = Quaternion(0.046474, 0.155068, 0.844688, 0.510193)
+bones/17/rotation = Quaternion(0.473945, 0.841599, -0.25103, 0.0638067)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/rotation = Quaternion(0.130035, 0.0372387, 0.860299, -0.491517)
+bones/18/scale = Vector3(1, 1, 1)
+bones/19/rotation = Quaternion(0.0119144, -0.0226281, -0.742755, 0.669075)
+bones/19/scale = Vector3(1, 1, 1)
+bones/20/rotation = Quaternion(0.351229, 0.744066, -0.389344, 0.414023)
+bones/20/scale = Vector3(1, 1, 1)
+bones/21/rotation = Quaternion(-0.0086164, 0.0214407, 0.960933, -0.275816)
+bones/21/scale = Vector3(1, 1, 1)
+bones/22/rotation = Quaternion(0.00217813, 0.00240464, -0.542561, 0.84001)
+bones/23/rotation = Quaternion(0.200762, 0.458182, -0.54094, 0.676128)
+bones/23/scale = Vector3(0.999999, 1, 1)
+bones/24/rotation = Quaternion(0.0345355, -0.048016, -0.804879, 0.590484)
+bones/24/scale = Vector3(0.999999, 1, 1)
+bones/25/rotation = Quaternion(0.0390521, -0.0340886, -0.688303, 0.723569)
+bones/26/rotation = Quaternion(0.175941, 0.267149, -0.649068, 0.690207)
+bones/26/scale = Vector3(0.999999, 1, 1)
+bones/27/rotation = Quaternion(9.10137e-08, -9.85697e-08, -0.753259, 0.657724)
+bones/27/scale = Vector3(0.999999, 1, 1)
+bones/28/rotation = Quaternion(-3.07143e-08, 3.41596e-08, -0.534407, 0.845228)
+
+[node name="Object_38" parent="Path3D/Spider/Sketchfab_Scene/Sketchfab_model/e2236cece289493c8a23332d65d8332f_fbx/Object_2/RootNode/Spider2Parent/Spider2/root/Object_7/Skeleton3D" index="0"]
+layers = 2
+surface_material_override/0 = SubResource("StandardMaterial3D_cayyy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Path3D/Spider"]
+libraries = {
+"": SubResource("AnimationLibrary_pu5vc")
+}
 
 [node name="Neck" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="Neck"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
 fov = 60.0
 near = 0.001
 
@@ -164,14 +359,6 @@ target_position = Vector3(0, 0, -1)
 libraries = {
 "": SubResource("AnimationLibrary_vl2p2")
 }
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Neck"]
-visible = false
-layers = 2
-light_energy = 0.02
-light_volumetric_fog_energy = 5.0
-light_cull_mask = 4294967294
-omni_range = 1.0
 
 [node name="PlayerCol" type="StaticBody3D" parent="."]
 collision_layer = 2
@@ -216,6 +403,17 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_8yol1")
 
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+texture = SubResource("GradientTexture1D_ykjq7")
+
 [node name="Move" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.161198)
 stream = ExtResource("3_klwil")
@@ -225,3 +423,16 @@ max_distance = 1.0
 max_polyphony = 3
 panning_strength = 2.0
 bus = &"Echo"
+
+[node name="Spider" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+stream = ExtResource("14_2md8b")
+volume_db = -15.0
+max_distance = 5.0
+bus = &"Echo"
+
+[node name="EndGame" type="Timer" parent="."]
+
+[connection signal="timeout" from="EndGame" to="." method="game_over"]
+
+[editable path="Path3D/Spider/Sketchfab_Scene"]

@@ -20,9 +20,10 @@ var stored_look_vector : Vector2
 var can_up = true as bool
 var can_move = true as bool
 var depth :float
-const start_depth = 193 as float
+const start_depth = 5 as float
 
 func _ready():
+	spider.visible = false
 	depth = start_depth
 	handheld.set_depth_bar(depth * 2)
 	handheld.set_depth_text(depth * 2)
@@ -47,6 +48,12 @@ func _process(_delta):
 	
 	if dot < 1-x: crosshair.modulate.a = 0
 	else: crosshair.modulate.a = smoothstep(0,1,map)
+	
+	if spider_active:
+		if camera.rotation_degrees.x > 40:
+			$Spider.play()
+			$Path3D/Spider/AnimationPlayer.play("aa")
+			spider_active = false
 
 func _physics_process(delta):
 	look()
@@ -76,13 +83,15 @@ func path_sway(delta: float):
 	path.rotation_degrees.y = lerp(path.rotation_degrees.y, new_rot, delta * speed)
 
 func lerp_flashlight(delta:float):
-	flashlight.global_basis = lerp(flashlight.global_basis, camera.global_basis, delta * 5)
+	var speed = 5
+	if spider_active: speed = 15
+	flashlight.global_basis = lerp(flashlight.global_basis, camera.global_basis, delta * speed)
 	
 	var to_hand = (handheld.global_position - camera.global_position).normalized()
 	var y = 0.2
 	var dot = to_hand.dot(-flashlight.global_basis.z)
 	var map = remap(clamp(dot,1-y,1),1-y,1,0,1)
-	flashlight.light_energy = lerp(0.8,0.1, map)
+	flashlight.light_energy = lerp(1.1,0.2, map)
 
 func ray_process(delta:float):
 	var moving = false
@@ -111,3 +120,18 @@ func ray_process(delta:float):
 		#environment.global_position.y += depth_change * delta * fall_speed
 	
 	move_sfx.stream_paused = not moving
+
+var spider_active = false as bool
+@onready var spider = $Path3D/Spider as Node3D
+func spawn_spider():
+	spider_active = true
+	spider.visible = true
+
+func end_game():
+	$CanvasLayer/Control/TextureRect2.visible = true
+	$EndGame.start()
+
+@onready var manager = get_tree().get_first_node_in_group("manager") as GameManager
+
+func game_over():
+	manager.end_game()

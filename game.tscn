@@ -1,0 +1,381 @@
+[gd_scene load_steps=18 format=3 uid="uid://dbe0f56rn28bg"]
+
+[ext_resource type="PackedScene" uid="uid://bcaif505htlu8" path="res://models/environment/test.blend" id="1_1drmu"]
+[ext_resource type="PackedScene" uid="uid://c57svi44sdapd" path="res://scene/event.tscn" id="2_2es7v"]
+[ext_resource type="AudioStream" uid="uid://dlgsfq83xvbda" path="res://sounds/gettingsettorecordthunder.mp3" id="3_c8xr0"]
+[ext_resource type="AudioStream" uid="uid://b5nquan3x5sle" path="res://sounds/wooowowooo.wav" id="4_h0i0g"]
+[ext_resource type="AudioStream" uid="uid://focwp5ysmb15" path="res://sounds/steps in wood floor.wav" id="5_7iuwr"]
+[ext_resource type="AudioStream" uid="uid://dn84fyywb4tgb" path="res://sounds/alarm rythm sinus.mp3" id="6_mqtmb"]
+[ext_resource type="Script" path="res://scene/crash_event.gd" id="7_tc1aw"]
+[ext_resource type="AudioStream" uid="uid://cq82stgd4btym" path="res://sounds/sine/crash.wav" id="8_5d61j"]
+[ext_resource type="AudioStream" uid="uid://d0pkxfyvr637m" path="res://sounds/drip.wav" id="9_10ep1"]
+[ext_resource type="AudioStream" uid="uid://cq68a53j72vg1" path="res://sounds/069No Title-.mp3" id="10_k2yla"]
+[ext_resource type="AudioStream" uid="uid://cph2axllalwyu" path="res://sounds/airport_bulletin board_selfmade_synthisized.mp3" id="11_6lcyh"]
+[ext_resource type="Script" path="res://scene/end_event.gd" id="12_coq6b"]
+[ext_resource type="PackedScene" uid="uid://crqhj2fpvadgh" path="res://scene/player.tscn" id="13_vdldk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ln406"]
+shading_mode = 0
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1m53o"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0, 0, 0, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_22evx"]
+sky_material = SubResource("ProceduralSkyMaterial_1m53o")
+
+[sub_resource type="Environment" id="Environment_7vgpj"]
+background_mode = 2
+sky = SubResource("Sky_22evx")
+tonemap_exposure = 0.8
+glow_bloom = 0.5
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 0.02
+volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0.376471, 0.376471, 0.376471, 1)
+volumetric_fog_emission_energy = 1024.0
+volumetric_fog_sky_affect = 0.0
+
+[node name="Game" type="Node3D"]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="test" parent="Environment" instance=ExtResource("1_1drmu")]
+
+[node name="Cube_001" parent="Environment/test" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ln406")
+
+[node name="Event_0" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -33.0265, 0)
+message = "good luck."
+
+[node name="Event_1" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -46.1322, 0)
+message = "Ground 400m"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -3, 0)
+stream = ExtResource("3_c8xr0")
+volume_db = -10.0
+pitch_scale = 0.5
+autoplay = true
+max_distance = 10.0
+bus = &"Echo"
+
+[node name="Drones" type="AudioStreamPlayer" parent="Environment/Event_1"]
+stream = ExtResource("4_h0i0g")
+volume_db = -12.0
+pitch_scale = 0.5
+bus = &"Echo"
+
+[node name="Event_2" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -59.7162, 0)
+message = "no heat signatures found by probes"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -3, 2.9676)
+stream = ExtResource("5_7iuwr")
+volume_db = -3.0
+pitch_scale = 0.5
+autoplay = true
+max_distance = 10.0
+bus = &"Echo"
+
+[node name="Event_3" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -77.6308, 0)
+script = null
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Environment/Event_3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -0.5783, 1.65772)
+stream = ExtResource("5_7iuwr")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Environment/Event_3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.37621, -1.91126, -0.673441)
+stream = ExtResource("5_7iuwr")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Environment/Event_3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.826544, -5.18457, 0.150648)
+stream = ExtResource("5_7iuwr")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="Event_4" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -109.704, 0)
+message = "Your temperature is dropping"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -3, 2.9676)
+stream = ExtResource("5_7iuwr")
+volume_db = -3.0
+pitch_scale = 0.5
+autoplay = true
+max_distance = 10.0
+bus = &"Echo"
+
+[node name="Event_5" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -154.952, 0)
+message = "It might be getting dark but do not worry the path is very linear"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -3, 2.9676)
+stream = ExtResource("5_7iuwr")
+volume_db = -3.0
+pitch_scale = 0.5
+autoplay = true
+max_distance = 7.0
+bus = &"Echo"
+
+[node name="Event_6" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -177.452, 0)
+
+[node name="WOWOWOW" type="AudioStreamPlayer3D" parent="Environment/Event_6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.81403, 0.0976257, 2.9676)
+stream = ExtResource("4_h0i0g")
+volume_db = -15.0
+max_db = 0.5
+pitch_scale = 1.5
+autoplay = true
+max_distance = 20.0
+panning_strength = 2.0
+bus = &"Echo"
+emission_angle_degrees = 90.0
+
+[node name="Alarm" type="AudioStreamPlayer3D" parent="Environment/Event_6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.97671, 0.14296, 2.9676)
+stream = ExtResource("6_mqtmb")
+volume_db = -15.0
+max_db = 1.0
+autoplay = true
+max_distance = 20.0
+panning_strength = 2.0
+bus = &"Echo"
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Environment/Event_6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8335, -3.13011, -1.14196)
+light_color = Color(0.545098, 0.933333, 0.776471, 1)
+light_energy = 100.0
+omni_range = 15.0
+omni_attenuation = 1.5529
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Environment/Event_6"]
+transform = Transform3D(1, 0, 0, 0, 0.999619, 0.0276076, 0, -0.0276076, 0.999619, -23.8925, -5.98853, -1.96296)
+light_color = Color(0.545098, 0.933333, 0.776471, 1)
+light_energy = 100.0
+omni_range = 15.0
+omni_attenuation = 1.5529
+
+[node name="Event_7" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -193.794, 0)
+script = ExtResource("7_tc1aw")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Environment/Event_7"]
+stream = ExtResource("8_5d61j")
+volume_db = -8.0
+bus = &"Echo"
+
+[node name="Timer" type="Timer" parent="Environment/Event_7"]
+wait_time = 25.0
+one_shot = true
+
+[node name="Event_8" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -211.235, 0)
+message = "h# h# h#  h# h# h# e# e# h#"
+
+[node name="Event_9" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -220.108, 0)
+message = "we are having issues up top"
+
+[node name="Event_10" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -232.346, 0)
+message = "keep gh#oinh#g h# h#e#l#l#o# "
+
+[node name="Event_11" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -243.435, 0)
+message = "i# a#m# l#e#a#r#n#i#n#g#"
+
+[node name="Event_12" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -254.226, 0)
+message = "c#a#n# y#o#u# h#e#a#r# m#e# t#a#p#p#i#n#g#"
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Environment/Event_12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -0.5783, 1.65772)
+stream = ExtResource("5_7iuwr")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Environment/Event_12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.39561, 2.21541, -2.79512)
+stream = ExtResource("5_7iuwr")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Environment/Event_12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.39561, 12.5854, 2.66461)
+stream = ExtResource("5_7iuwr")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="AudioStreamPlayer3D5" type="AudioStreamPlayer3D" parent="Environment/Event_12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.39561, 23.3657, -4.29258)
+stream = ExtResource("5_7iuwr")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="AudioStreamPlayer3D6" type="AudioStreamPlayer3D" parent="Environment/Event_12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.39561, 33.943, 4.52515)
+stream = ExtResource("5_7iuwr")
+volume_db = -30.0
+max_db = 0.5
+pitch_scale = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="AudioStreamPlayer3D7" type="AudioStreamPlayer3D" parent="Environment/Event_12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.39561, 6.23703, -2.76525)
+stream = ExtResource("9_10ep1")
+volume_db = -30.0
+max_db = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="AudioStreamPlayer3D8" type="AudioStreamPlayer3D" parent="Environment/Event_12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.39561, 93.6028, -1.67478)
+stream = ExtResource("9_10ep1")
+volume_db = -30.0
+max_db = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="AudioStreamPlayer3D9" type="AudioStreamPlayer3D" parent="Environment/Event_12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.39561, 133.273, -4.13436)
+stream = ExtResource("9_10ep1")
+volume_db = -30.0
+max_db = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="AudioStreamPlayer3D10" type="AudioStreamPlayer3D" parent="Environment/Event_12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.39561, 182.977, -4.13436)
+stream = ExtResource("9_10ep1")
+volume_db = -30.0
+max_db = 0.5
+autoplay = true
+max_distance = 8.0
+panning_strength = 3.0
+bus = &"Echo"
+
+[node name="Event_13" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -265.585, 0)
+message = "SOS SOS SOS SOS"
+
+[node name="Event_14" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -269.174, 0)
+message = "w#h#y# a#r#e# y#o#u# h#e#r#e#"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.34427, 0)
+stream = ExtResource("10_k2yla")
+volume_db = -30.0
+pitch_scale = 0.8
+panning_strength = 2.0
+bus = &"Echo"
+
+[node name="Event_15" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -278.782, 0)
+message = "a#r#e# y#o#u# s#c#a#r#e#d# t#o# g#o# d#e#e#p#e#r#"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.85068, 0)
+stream = ExtResource("11_6lcyh")
+volume_db = -30.0
+pitch_scale = 0.7
+panning_strength = 2.0
+bus = &"Echo"
+
+[node name="Event_16" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -287.309, 0)
+message = "i# c#a#n# s#e#e# y#o#u#r# l#i#g#h#t# d#o#w#n# t#h#e#r#e#"
+
+[node name="Event_17" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -287.309, 0)
+message = "i# c#a#n# s#e#e# y#o#u#r# l#i#g#h#t# d#o#w#n# t#h#e#r#e#"
+
+[node name="Event_18" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -298.5, 0)
+script = ExtResource("12_coq6b")
+message = "u#p#"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7vgpj")
+
+[node name="Player" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("13_vdldk")]
+environment = NodePath("../Environment")
+
+[node name="Spider" parent="Player/Path3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 0.120037, -0.992761, 0, 0.992761, 0.120037, 0, 0.727048, -0.295138)
+
+[node name="Sketchfab_Scene" parent="Player/Path3D/Spider" index="0"]
+transform = Transform3D(0.239424, 0.0466258, -0.174649, -0.0795462, 0.287452, -0.0323084, 0.162322, 0.0720935, 0.241773, 0.00498568, -0.0341914, 0.000771165)
+
+[node name="EndGame" parent="Player" index="7"]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="on_enter" from="Environment/Event_1" to="Environment/Event_1/Drones" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/Event_7" to="Environment/Event_7/AudioStreamPlayer" method="play" binds= [0.0]]
+[connection signal="timeout" from="Environment/Event_7/Timer" to="Environment/Event_7" method="_on_timer_timeout"]
+[connection signal="on_enter" from="Environment/Event_14" to="Environment/Event_14/AudioStreamPlayer3D" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/Event_15" to="Environment/Event_15/AudioStreamPlayer3D" method="play" binds= [38.41]]
+
+[editable path="Environment/test"]
+[editable path="Player"]
+[editable path="Player/Path3D/Spider/Sketchfab_Scene"]

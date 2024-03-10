@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bjaetrpc72q54"]
+[gd_scene load_steps=25 format=3 uid="uid://bjaetrpc72q54"]
 
 [ext_resource type="Script" path="res://scripts/Handheld.gd" id="1_ieulp"]
 [ext_resource type="Script" path="res://scripts/button_return.gd" id="3_737je"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://bvdfhvut3mt8l" path="res://sounds/sine/dot_1.wav" id="4_qfcty"]
 [ext_resource type="AudioStream" uid="uid://6y7g8k3448da" path="res://sounds/sine/dash_1.wav" id="5_a74ia"]
 [ext_resource type="PackedScene" uid="uid://tx00gav6alvb" path="res://models/handheld.blend" id="5_pfcd2"]
+[ext_resource type="AudioStream" uid="uid://3jcilags46mi" path="res://sounds/sine/tap.wav" id="5_svymc"]
 [ext_resource type="Texture2D" uid="uid://bn022ynlbyfn6" path="res://media/depth_meter.png" id="6_1ra1a"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_j0fyx"]
@@ -169,29 +170,21 @@ max_distance = 0.2
 max_polyphony = 3
 panning_strength = 2.0
 
-[node name="Tap_Dot" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("4_qfcty")
+[node name="Tap" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+stream = ExtResource("5_svymc")
 volume_db = -30.0
 max_db = 0.1
-pitch_scale = 0.3
-max_distance = 0.2
+max_distance = 5.0
 max_polyphony = 3
 panning_strength = 2.0
+bus = &"Echo"
 
 [node name="Dash" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_a74ia")
 volume_db = -30.0
 max_db = 0.1
 pitch_scale = 0.8
-max_distance = 0.2
-max_polyphony = 3
-panning_strength = 2.0
-
-[node name="Tap_Dash" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("5_a74ia")
-volume_db = -30.0
-max_db = 0.1
-pitch_scale = 0.3
 max_distance = 0.2
 max_polyphony = 3
 panning_strength = 2.0
