@@ -34,7 +34,7 @@ fill_to = Vector2(0.5, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yvbi2"]
 transparency = 1
-albedo_color = Color(0, 1, 1, 0.0470588)
+albedo_color = Color(0, 1, 1, 0.615686)
 albedo_texture = SubResource("GradientTexture2D_f7l6p")
 emission_enabled = true
 emission = Color(0.156863, 0.705882, 0.768627, 1)

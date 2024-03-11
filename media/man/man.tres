@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c0rdtpy2nxn2m"]
+
+[ext_resource type="Texture2D" uid="uid://btma4on2m4jn" path="res://media/man/man_t256.png" id="1_sfdnq"]
+
+[resource]
+albedo_texture = ExtResource("1_sfdnq")
+emission_enabled = true
+emission_texture = ExtResource("1_sfdnq")
+texture_filter = 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dbe0f56rn28bg"]
+[gd_scene load_steps=22 format=3 uid="uid://dbe0f56rn28bg"]
 
 [ext_resource type="PackedScene" uid="uid://bcaif505htlu8" path="res://models/environment/test.blend" id="1_1drmu"]
 [ext_resource type="PackedScene" uid="uid://c57svi44sdapd" path="res://scene/event.tscn" id="2_2es7v"]
@@ -11,11 +11,25 @@
 [ext_resource type="AudioStream" uid="uid://d0pkxfyvr637m" path="res://sounds/drip.wav" id="9_10ep1"]
 [ext_resource type="AudioStream" uid="uid://cq68a53j72vg1" path="res://sounds/069No Title-.mp3" id="10_k2yla"]
 [ext_resource type="AudioStream" uid="uid://cph2axllalwyu" path="res://sounds/airport_bulletin board_selfmade_synthisized.mp3" id="11_6lcyh"]
+[ext_resource type="Script" path="res://scene/leg_drop.gd" id="11_y2my5"]
 [ext_resource type="Script" path="res://scene/end_event.gd" id="12_coq6b"]
 [ext_resource type="PackedScene" uid="uid://crqhj2fpvadgh" path="res://scene/player.tscn" id="13_vdldk"]
+[ext_resource type="Texture2D" uid="uid://bvnqliy27t41j" path="res://media/webs/05.png" id="13_yuaqq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ln406"]
 shading_mode = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_v57ki"]
+lightmap_size_hint = Vector2i(12, 12)
+size = Vector2(2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f5koi"]
+transparency = 1
+blend_mode = 1
+no_depth_test = true
+albedo_texture = ExtResource("13_yuaqq")
+metallic_specular = 1.0
+roughness = 0.0
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1m53o"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -51,9 +65,19 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ln406")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -33.0265, 0)
 message = "good luck."
 
+[node name="Event_0_5" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -38.6328, 0)
+message = "Ground 400m"
+
+[node name="Drones" type="AudioStreamPlayer" parent="Environment/Event_0_5"]
+stream = ExtResource("4_h0i0g")
+volume_db = -12.0
+pitch_scale = 0.5
+bus = &"Echo"
+
 [node name="Event_1" parent="Environment" instance=ExtResource("2_2es7v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -46.1322, 0)
-message = "Ground 400m"
+message = "return up if danger"
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -3, 0)
@@ -64,18 +88,25 @@ autoplay = true
 max_distance = 10.0
 bus = &"Echo"
 
-[node name="Drones" type="AudioStreamPlayer" parent="Environment/Event_1"]
-stream = ExtResource("4_h0i0g")
-volume_db = -12.0
-pitch_scale = 0.5
-bus = &"Echo"
-
 [node name="Event_2" parent="Environment" instance=ExtResource("2_2es7v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -59.7162, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -58.6918, 0)
 message = "no heat signatures found by probes"
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -3, 2.9676)
+stream = ExtResource("5_7iuwr")
+volume_db = -3.0
+pitch_scale = 0.5
+autoplay = true
+max_distance = 10.0
+bus = &"Echo"
+
+[node name="Event_19" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -93.7355, 0)
+message = "cave is opening"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Environment/Event_19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412931, -3, -5.72478)
 stream = ExtResource("5_7iuwr")
 volume_db = -3.0
 pitch_scale = 0.5
@@ -329,6 +360,10 @@ pitch_scale = 0.8
 panning_strength = 2.0
 bus = &"Echo"
 
+[node name="LEG DROP" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -273.559, 0.508175)
+script = ExtResource("11_y2my5")
+
 [node name="Event_15" parent="Environment" instance=ExtResource("2_2es7v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -278.782, 0)
 message = "a#r#e# y#o#u# s#c#a#r#e#d# t#o# g#o# d#e#e#p#e#r#"
@@ -354,23 +389,749 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -298.5, 0)
 script = ExtResource("12_coq6b")
 message = "u#p#"
 
+[node name="Webs" type="Node3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -132, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs2" type="Node3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -134.981, 0.718553)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs2"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs2"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs2"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs2"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs2"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs2"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs2"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs2"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs2"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs3" type="Node3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -139.054, 1.41862)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs3"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs3"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs3"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs3"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs3"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs3"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs3"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs3"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs3"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs4" type="Node3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.573297, -157.943, 1.39997)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs4"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs4"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs4"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs4"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs4"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs4"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs4"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs4"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs4"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs5" type="Node3D" parent="Environment"]
+transform = Transform3D(0.519817, 0, 0.854277, 0, 1, 0, -0.854277, 0, 0.519817, 0.573297, -159.812, 1.39997)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs5"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs5"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs5"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs5"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs5"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs5"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs5"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs5"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs5"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="Environment/Webs5"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs6" type="Node3D" parent="Environment"]
+transform = Transform3D(0.519817, 0, 0.854277, 0, 1, 0, -0.854277, 0, 0.519817, 0.573297, -167.96, -0.00247943)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs6"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs6"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs6"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs6"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs6"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs6"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs6"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs6"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs6"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs10" type="Node3D" parent="Environment"]
+transform = Transform3D(0.519817, 0, 0.854277, 0, 1, 0, -0.854277, 0, 0.519817, 0.573297, -190.02, -0.00247943)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs10"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs10"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs10"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs10"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs10"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs10"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs10"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs10"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs10"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs7" type="Node3D" parent="Environment"]
+transform = Transform3D(0.675763, 0, 1.11056, 0, 1.3, 0, -1.11056, 0, 0.675763, -4.34997, -180.112, -0.305429)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs7"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs7"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs7"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs7"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs7"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs7"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs7"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs7"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs7"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs9" type="Node3D" parent="Environment"]
+transform = Transform3D(-0.901425, 0.423603, 0.83546, 0.310685, 1.22905, -0.287949, -0.88369, 0, -0.953463, -6.33147, -175.629, -0.580725)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs9"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs9"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs9"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs9"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs9"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs9"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs9"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs9"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs9"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs8" type="Node3D" parent="Environment"]
+transform = Transform3D(-0.94427, -0.388064, 0.804836, 0.785511, -0.918609, 0.478675, 0.425826, 0.834004, 0.901726, -6.72035, -173.919, -0.675603)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs8"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs8"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs8"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs8"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs8"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs8"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs8"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs8"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs8"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs11" type="Node3D" parent="Environment"]
+transform = Transform3D(-0.901425, 0.423603, 0.83546, 0.310685, 1.22905, -0.287949, -0.88369, 0, -0.953463, -3.97426, -172.657, 0.417226)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs11"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs11"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs11"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs11"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs11"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs11"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs11"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs11"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs11"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs12" type="Node3D" parent="Environment"]
+transform = Transform3D(-0.94427, -0.388064, 0.804836, 0.785511, -0.918609, 0.478675, 0.425826, 0.834004, 0.901726, -4.36313, -170.947, 0.322348)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs12"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs12"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs12"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs12"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs12"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs12"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs12"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs12"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs12"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs13" type="Node3D" parent="Environment"]
+transform = Transform3D(-0.858361, 0.423124, 0.879877, 0.310685, 1.22905, -0.287949, -0.925577, 0.0201539, -0.912635, -2.81641, -178.382, -5.04633)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs13"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs13"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs13"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs13"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs13"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs13"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs13"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs13"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs13"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="Webs14" type="Node3D" parent="Environment"]
+transform = Transform3D(-0.96346, -0.427304, 0.761023, 0.785511, -0.918609, 0.478675, 0.380418, 0.814597, 0.938997, -3.20033, -176.672, -5.1596)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Webs14"]
+transform = Transform3D(0.986048, 0.091069, -0.139338, 0, 0.83707, 0.547096, 0.166459, -0.539463, 0.825392, 1.51156, 0.236511, -2.15926)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Environment/Webs14"]
+transform = Transform3D(0.973259, 0, 0.22971, -0.0808816, 0.935961, 0.342687, -0.215, -0.352103, 0.910933, 0, 0, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Environment/Webs14"]
+transform = Transform3D(-0.0497914, -0.927581, -0.37029, 0.975344, -0.124969, 0.181898, -0.215, -0.352103, 0.910933, 0, 0.71907, -2.19726)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Environment/Webs14"]
+transform = Transform3D(0.000858307, -0.822069, -0.569386, 0.975344, -0.124969, 0.181898, -0.220688, -0.555504, 0.801693, 1.65648, 0.71907, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Environment/Webs14"]
+transform = Transform3D(-0.631551, -0.774564, 0.0345591, 0.743263, -0.592139, 0.311339, -0.220688, 0.222313, 0.94967, 0.586352, -0.778625, -1.66501)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Environment/Webs14"]
+transform = Transform3D(-0.48823, 0.872031, 0.0345591, -0.823873, -0.473606, 0.311339, 0.287865, 0.123533, 0.949671, -0.423669, -1.10986, -1.51966)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Environment/Webs14"]
+transform = Transform3D(-0.544191, 0.507485, -0.668068, -0.823873, -0.473606, 0.311339, -0.158401, 0.719831, 0.675835, 1.74963, -1.06917, -1.21378)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Environment/Webs14"]
+transform = Transform3D(-0.42882, 0.161681, -0.888804, -0.823873, -0.473606, 0.311339, -0.370605, 0.86577, 0.336296, 1.74963, -1.06917, -0.49978)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Environment/Webs14"]
+transform = Transform3D(-0.305596, 0.833823, 0.459729, -0.823872, -0.473606, 0.311339, 0.477332, -0.283614, 0.831696, -0.603083, -1.06917, -1.42399)
+mesh = SubResource("QuadMesh_v57ki")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5koi")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7vgpj")
 
 [node name="Player" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("13_vdldk")]
 environment = NodePath("../Environment")
 
-[node name="Spider" parent="Player/Path3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 0.120037, -0.992761, 0, 0.992761, 0.120037, 0, 0.727048, -0.295138)
-
-[node name="Sketchfab_Scene" parent="Player/Path3D/Spider" index="0"]
-transform = Transform3D(0.239424, 0.0466258, -0.174649, -0.0795462, 0.287452, -0.0323084, 0.162322, 0.0720935, 0.241773, 0.00498568, -0.0341914, 0.000771165)
+[node name="Skeleton3D" parent="Player/Path3D/Spider/Sketchfab_Scene/Sketchfab_model/e2236cece289493c8a23332d65d8332f_fbx/Object_2/RootNode/Spider2Parent/Spider2/root/Object_7" index="0"]
+bones/1/rotation = Quaternion(0.707107, -3.02647e-15, 0.707107, 3.02647e-15)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/rotation = Quaternion(3.93729e-08, -4.11129e-08, -0.722225, 0.691658)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/rotation = Quaternion(0.856694, 0.446183, 0.258538, 0.0124545)
+bones/3/scale = Vector3(1, 1, 1)
+bones/4/rotation = Quaternion(0.185523, -0.0283833, -0.318686, 0.929093)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/rotation = Quaternion(0.00829426, 0.00302464, -0.28577, 0.958258)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/rotation = Quaternion(0.793539, 0.349259, 0.264946, -0.422039)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/rotation = Quaternion(0.00506118, 0.0170677, -0.395762, 0.918181)
+bones/7/scale = Vector3(1, 1, 1)
+bones/8/rotation = Quaternion(-0.00494112, -0.000668916, -0.352881, 0.935655)
+bones/9/rotation = Quaternion(-0.488512, -0.2231, -0.348794, 0.768066)
+bones/9/scale = Vector3(0.999999, 1, 1)
+bones/10/rotation = Quaternion(-0.0116588, 0.0574085, -0.416804, 0.907107)
+bones/10/scale = Vector3(0.999999, 1, 1)
+bones/11/rotation = Quaternion(-0.0283968, 0.0477806, -0.373049, 0.926145)
+bones/12/rotation = Quaternion(-0.16023, -0.195157, -0.511978, 0.821048)
+bones/12/scale = Vector3(0.999999, 1, 1)
+bones/13/rotation = Quaternion(3.14302e-07, 9.87235e-07, -0.275828, 0.961207)
+bones/13/scale = Vector3(0.999999, 1, 1)
+bones/14/rotation = Quaternion(1.37515e-07, -4.62917e-07, -0.367521, 0.930015)
+bones/15/position = Vector3(0.00930391, 0.277483, 0.0938954)
+bones/15/rotation = Quaternion(-0.0516263, -0.177552, 0.841709, 0.507282)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/position = Vector3(0.00930391, 0.273722, -0.0938954)
+bones/16/rotation = Quaternion(0.0144877, 0.071335, 0.846541, 0.527323)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/rotation = Quaternion(0.859308, 0.442911, -0.25509, -0.0186729)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/rotation = Quaternion(-0.184656, 0.0287978, -0.324359, 0.927289)
+bones/18/scale = Vector3(1, 1, 1)
+bones/19/rotation = Quaternion(-0.0080683, -0.00316522, -0.29069, 0.956778)
+bones/19/scale = Vector3(1, 1, 1)
+bones/20/rotation = Quaternion(0.800048, 0.33984, -0.258221, 0.421609)
+bones/20/scale = Vector3(1, 1, 1)
+bones/21/rotation = Quaternion(-0.00525682, -0.0175614, -0.408469, 0.912588)
+bones/21/scale = Vector3(1, 1, 1)
+bones/22/rotation = Quaternion(0.0048076, 0.000698145, -0.363621, 0.931534)
+bones/22/scale = Vector3(1, 1, 1)
+bones/23/rotation = Quaternion(0.488141, 0.217044, -0.339158, 0.774327)
+bones/23/scale = Vector3(0.999999, 1, 1)
+bones/24/rotation = Quaternion(0.0112855, -0.0590205, -0.428868, 0.901366)
+bones/24/scale = Vector3(1, 1, 1)
+bones/25/rotation = Quaternion(0.0280798, -0.0490861, -0.383057, 0.921992)
+bones/26/rotation = Quaternion(0.15417, 0.191066, -0.507194, 0.826123)
+bones/26/scale = Vector3(0.999999, 1, 1)
+bones/27/rotation = Quaternion(-1.40902e-07, -4.2451e-07, -0.283224, 0.959054)
+bones/27/scale = Vector3(0.999999, 1, 1)
+bones/28/rotation = Quaternion(-1.72332e-07, 1.1026e-07, -0.376549, 0.926397)
 
 [node name="EndGame" parent="Player" index="7"]
 wait_time = 3.0
 one_shot = true
 
-[connection signal="on_enter" from="Environment/Event_1" to="Environment/Event_1/Drones" method="play" binds= [0.0]]
+[connection signal="on_enter" from="Environment/Event_0_5" to="Environment/Event_0_5/Drones" method="play" binds= [0.0]]
 [connection signal="on_enter" from="Environment/Event_7" to="Environment/Event_7/AudioStreamPlayer" method="play" binds= [0.0]]
 [connection signal="timeout" from="Environment/Event_7/Timer" to="Environment/Event_7" method="_on_timer_timeout"]
 [connection signal="on_enter" from="Environment/Event_14" to="Environment/Event_14/AudioStreamPlayer3D" method="play" binds= [0.0]]

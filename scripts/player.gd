@@ -135,3 +135,6 @@ func end_game():
 
 func game_over():
 	manager.end_game()
+
+func drop_leg():
+	$Node3D/AnimationPlayer.play("fall")

@@ -38,5 +38,6 @@ flashlight={
 
 [rendering]
 
+renderer/rendering_method="gl_compatibility"
 environment/volumetric_fog/volume_size=128
 environment/volumetric_fog/volume_depth=128
