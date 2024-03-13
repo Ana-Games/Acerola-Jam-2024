@@ -6,7 +6,7 @@ var current_scene : Node3D
 
 func start_game():
 	var new = scene.instantiate()
-	$Control.queue_free()
+	$CanvasLayer.queue_free()
 	current_scene = new
 	add_child(new)
 

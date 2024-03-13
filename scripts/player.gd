@@ -12,6 +12,7 @@ var stored_look_vector : Vector2
 @onready var handheld = $Path3D/HandHeld as Handheld
 @onready var crosshair = $CanvasLayer/Control/Crosshair as TextureRect
 @onready var move_sfx = $Move as AudioStreamPlayer3D
+@onready var fail_sfx = $Fail as AudioStreamPlayer3D
 
 @onready var flashlight = $Flashlight as SpotLight3D
 @onready var ray = $Neck/Camera3D/RayCast3D as RayCast3D
@@ -20,7 +21,7 @@ var stored_look_vector : Vector2
 var can_up = true as bool
 var can_move = true as bool
 var depth :float
-const start_depth = 5 as float
+const start_depth = 10 as float
 
 func _ready():
 	spider.visible = false
@@ -95,18 +96,22 @@ func lerp_flashlight(delta:float):
 
 func ray_process(delta:float):
 	var moving = false
-	if Input.is_action_pressed("interact") and ray.is_colliding() and can_move:
-		moving = true
-		
+	var scraping = false
+	if Input.is_action_pressed("interact") and ray.is_colliding():
 		var depth_change = 0
-		if ray.get_collider().is_in_group("up") and can_up:
-			depth_change = -1
-			move_sfx.pitch_scale = 1.1
+		if ray.get_collider().is_in_group("up"):
+			if can_up and can_move:
+				depth_change = -1
+				move_sfx.pitch_scale = 1.1
+			else: scraping = true
 		elif ray.get_collider().is_in_group("down"):
-			move_sfx.pitch_scale = 0.9
-			depth_change = 1
+			if can_move:
+				move_sfx.pitch_scale = 0.9
+				depth_change = 1
+			else: scraping = true
 		ray.get_collider().get_node("CSGCylinder3D").position.y = -0.002
 		
+		moving = depth_change !=0
 		var fall_speed = 0.5
 		if depth < start_depth:
 			depth_change = clamp(depth_change,0,1)
@@ -120,6 +125,7 @@ func ray_process(delta:float):
 		#environment.global_position.y += depth_change * delta * fall_speed
 	
 	move_sfx.stream_paused = not moving
+	fail_sfx.stream_paused = not scraping
 
 var spider_active = false as bool
 @onready var spider = $Path3D/Spider as Node3D
@@ -138,3 +144,7 @@ func game_over():
 
 func drop_leg():
 	$Node3D/AnimationPlayer.play("fall")
+
+
+func stop_move():
+	can_move = false

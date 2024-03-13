@@ -389,6 +389,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -298.5, 0)
 script = ExtResource("12_coq6b")
 message = "u#p#"
 
+[node name="Event_20" parent="Environment" instance=ExtResource("2_2es7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -300.618, 0)
+script = ExtResource("12_coq6b")
+
 [node name="Webs" type="Node3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -132, 0)
 
@@ -1072,6 +1076,15 @@ environment = SubResource("Environment_7vgpj")
 [node name="Player" parent="." node_paths=PackedStringArray("environment") instance=ExtResource("13_vdldk")]
 environment = NodePath("../Environment")
 
+[node name="HandHeld" parent="Player/Path3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.403169, -0.915123, 0, 0.915123, 0.403169, 0, -0.0560129, -0.136663)
+
+[node name="Spider" parent="Player/Path3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 0.120037, -0.992761, 0, 0.992761, 0.120037, 0, 0.727048, -0.295138)
+
+[node name="Sketchfab_Scene" parent="Player/Path3D/Spider" index="0"]
+transform = Transform3D(0.239424, 0.0466258, -0.174649, -0.0795462, 0.287452, -0.0323085, 0.162322, 0.0720936, 0.241773, 0.00498568, -0.0341914, 0.000771165)
+
 [node name="Skeleton3D" parent="Player/Path3D/Spider/Sketchfab_Scene/Sketchfab_model/e2236cece289493c8a23332d65d8332f_fbx/Object_2/RootNode/Spider2Parent/Spider2/root/Object_7" index="0"]
 bones/1/rotation = Quaternion(0.707107, -3.02647e-15, 0.707107, 3.02647e-15)
 bones/1/scale = Vector3(1, 1, 1)
@@ -1080,62 +1093,50 @@ bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.856694, 0.446183, 0.258538, 0.0124545)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(0.185523, -0.0283833, -0.318686, 0.929093)
-bones/4/scale = Vector3(1, 1, 1)
 bones/5/rotation = Quaternion(0.00829426, 0.00302464, -0.28577, 0.958258)
-bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(0.793539, 0.349259, 0.264946, -0.422039)
-bones/6/scale = Vector3(1, 1, 1)
 bones/7/rotation = Quaternion(0.00506118, 0.0170677, -0.395762, 0.918181)
-bones/7/scale = Vector3(1, 1, 1)
 bones/8/rotation = Quaternion(-0.00494112, -0.000668916, -0.352881, 0.935655)
 bones/9/rotation = Quaternion(-0.488512, -0.2231, -0.348794, 0.768066)
-bones/9/scale = Vector3(0.999999, 1, 1)
 bones/10/rotation = Quaternion(-0.0116588, 0.0574085, -0.416804, 0.907107)
-bones/10/scale = Vector3(0.999999, 1, 1)
 bones/11/rotation = Quaternion(-0.0283968, 0.0477806, -0.373049, 0.926145)
 bones/12/rotation = Quaternion(-0.16023, -0.195157, -0.511978, 0.821048)
 bones/12/scale = Vector3(0.999999, 1, 1)
 bones/13/rotation = Quaternion(3.14302e-07, 9.87235e-07, -0.275828, 0.961207)
-bones/13/scale = Vector3(0.999999, 1, 1)
 bones/14/rotation = Quaternion(1.37515e-07, -4.62917e-07, -0.367521, 0.930015)
 bones/15/position = Vector3(0.00930391, 0.277483, 0.0938954)
 bones/15/rotation = Quaternion(-0.0516263, -0.177552, 0.841709, 0.507282)
-bones/15/scale = Vector3(1, 1, 1)
 bones/16/position = Vector3(0.00930391, 0.273722, -0.0938954)
 bones/16/rotation = Quaternion(0.0144877, 0.071335, 0.846541, 0.527323)
 bones/16/scale = Vector3(1, 1, 1)
 bones/17/rotation = Quaternion(0.859308, 0.442911, -0.25509, -0.0186729)
-bones/17/scale = Vector3(1, 1, 1)
 bones/18/rotation = Quaternion(-0.184656, 0.0287978, -0.324359, 0.927289)
-bones/18/scale = Vector3(1, 1, 1)
 bones/19/rotation = Quaternion(-0.0080683, -0.00316522, -0.29069, 0.956778)
-bones/19/scale = Vector3(1, 1, 1)
 bones/20/rotation = Quaternion(0.800048, 0.33984, -0.258221, 0.421609)
-bones/20/scale = Vector3(1, 1, 1)
 bones/21/rotation = Quaternion(-0.00525682, -0.0175614, -0.408469, 0.912588)
-bones/21/scale = Vector3(1, 1, 1)
 bones/22/rotation = Quaternion(0.0048076, 0.000698145, -0.363621, 0.931534)
 bones/22/scale = Vector3(1, 1, 1)
 bones/23/rotation = Quaternion(0.488141, 0.217044, -0.339158, 0.774327)
-bones/23/scale = Vector3(0.999999, 1, 1)
 bones/24/rotation = Quaternion(0.0112855, -0.0590205, -0.428868, 0.901366)
 bones/24/scale = Vector3(1, 1, 1)
 bones/25/rotation = Quaternion(0.0280798, -0.0490861, -0.383057, 0.921992)
 bones/26/rotation = Quaternion(0.15417, 0.191066, -0.507194, 0.826123)
-bones/26/scale = Vector3(0.999999, 1, 1)
 bones/27/rotation = Quaternion(-1.40902e-07, -4.2451e-07, -0.283224, 0.959054)
-bones/27/scale = Vector3(0.999999, 1, 1)
 bones/28/rotation = Quaternion(-1.72332e-07, 1.1026e-07, -0.376549, 0.926397)
 
-[node name="EndGame" parent="Player" index="7"]
+[node name="EndGame" parent="Player" index="8"]
 wait_time = 3.0
 one_shot = true
+
+[node name="man" parent="Player/Node3D" index="0"]
+transform = Transform3D(0.244226, 0.174224, 0, -0.174224, 0.244226, 0, 0, 0, 0.3, -0.329771, 11.1376, 0.354242)
 
 [connection signal="on_enter" from="Environment/Event_0_5" to="Environment/Event_0_5/Drones" method="play" binds= [0.0]]
 [connection signal="on_enter" from="Environment/Event_7" to="Environment/Event_7/AudioStreamPlayer" method="play" binds= [0.0]]
 [connection signal="timeout" from="Environment/Event_7/Timer" to="Environment/Event_7" method="_on_timer_timeout"]
 [connection signal="on_enter" from="Environment/Event_14" to="Environment/Event_14/AudioStreamPlayer3D" method="play" binds= [0.0]]
 [connection signal="on_enter" from="Environment/Event_15" to="Environment/Event_15/AudioStreamPlayer3D" method="play" binds= [38.41]]
+[connection signal="on_enter" from="Environment/Event_20" to="Player" method="stop_move"]
 
 [editable path="Environment/test"]
 [editable path="Player"]

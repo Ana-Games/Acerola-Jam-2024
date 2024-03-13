@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://bjaetrpc72q54"]
+[gd_scene load_steps=28 format=3 uid="uid://bjaetrpc72q54"]
 
 [ext_resource type="Script" path="res://scripts/Handheld.gd" id="1_ieulp"]
 [ext_resource type="Script" path="res://scripts/button_return.gd" id="3_737je"]
 [ext_resource type="FontFile" uid="uid://cgg0g7auyxkx4" path="res://media/VCR_OSD_MONO_1.001.ttf" id="4_ll6v4"]
 [ext_resource type="AudioStream" uid="uid://bvdfhvut3mt8l" path="res://sounds/sine/dot_1.wav" id="4_qfcty"]
+[ext_resource type="Texture2D" uid="uid://25hxu2yugf6y" path="res://media/arrow.png" id="4_wr3g6"]
 [ext_resource type="AudioStream" uid="uid://6y7g8k3448da" path="res://sounds/sine/dash_1.wav" id="5_a74ia"]
 [ext_resource type="PackedScene" uid="uid://tx00gav6alvb" path="res://models/handheld.blend" id="5_pfcd2"]
 [ext_resource type="AudioStream" uid="uid://3jcilags46mi" path="res://sounds/sine/tap.wav" id="5_svymc"]
@@ -60,6 +61,15 @@ size = Vector2(0.005, 0.018)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxslf"]
 albedo_color = Color(0.443137, 0.443137, 0.443137, 1)
 metallic_specular = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6luf0"]
+transparency = 1
+albedo_texture = ExtResource("4_wr3g6")
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_v1p67"]
+material = SubResource("StandardMaterial3D_6luf0")
+size = Vector2(0.005, 0.005)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fj1mi"]
 size = Vector3(0.008, 0.008, 0.006)
@@ -144,6 +154,10 @@ sides = 10
 material = SubResource("StandardMaterial3D_dxslf")
 script = ExtResource("3_737je")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Offset/Up/CSGCylinder3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.79397e-09, 0.00107004, 0)
+mesh = SubResource("PlaneMesh_v1p67")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Offset/Up"]
 shape = SubResource("BoxShape3D_fj1mi")
 
@@ -157,6 +171,10 @@ height = 0.002
 sides = 10
 material = SubResource("StandardMaterial3D_dxslf")
 script = ExtResource("3_737je")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Offset/Down/CSGCylinder3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.25963e-09, 0.00107004, 0)
+mesh = SubResource("PlaneMesh_v1p67")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Offset/Down"]
 shape = SubResource("BoxShape3D_fj1mi")
